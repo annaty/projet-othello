@@ -23,19 +23,37 @@ grille[milieu_ligne + 1][milieu_colonne + 1] = "x"
 grille[milieu_ligne][milieu_colonne + 1] = "o" 
 grille[milieu_ligne + 1][milieu_colonne] = "o" 
 
-for move in range(1, 61):
-    print("Move number" + str(move))
-    if move % 2 == 0
-        column_j1 = int(input("Joueur 1, entrez une ligne : "))
-        ligne_j1 = 
-    else:
-    
 #formatage affichage de la grille
-def printGrille():
-    for element in grille:
+def printGrille(grille_par):
+    for element in grille_par:
         for truc in element:
             print(truc, end=" ")
         print()
 
-printGrille()
+printGrille(grille)
 
+for move in range(1, 61):
+    print("Tour " + str(move))
+    if move % 2 == 1:
+        column_j1 = int(input("Joueur 1, entrez la colonne : "))
+        row_j1 = int(input("Joueur 1, entrez une ligne : "))
+
+        if 1 > column_j1 > 8 or 1 > row_j1 > 8:
+            print("ce ne sont pas des champs valides")
+        elif grille[row_j1][column_j1] == ".":
+            grille[row_j1][column_j1] = "o"
+            printGrille(grille)
+        elif grille[row_j1][column_j1] == "o" or grille[row_j1][column_j1] == "x":
+            print("ce champ est deja pris")
+
+    elif move % 2 == 0:
+        column_j2 = int(input("Joueur 2, entrez entrez la colonne : "))
+        row_j2 = int(input("Joueur 2, entrez une ligne : "))
+
+        if 1 > column_j2 > 8 or 1 > row_j2 > 8:
+            print("ce ne sont pas des champs valides")
+        elif grille[row_j2][column_j2] == ".":
+            grille[row_j2][column_j2] = "x"
+            printGrille(grille)
+        elif grille[row_j2][column_j2] == "o" or grille[row_j2][column_j2] == "x":
+            print("ce champ est deja pris")
