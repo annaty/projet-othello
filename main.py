@@ -35,25 +35,37 @@ printGrille(grille)
 for move in range(1, 61):
     print("Tour " + str(move))
     if move % 2 == 1:
-        column_j1 = int(input("Joueur 1, entrez la colonne : "))
-        row_j1 = int(input("Joueur 1, entrez une ligne : "))
+        while True:
+            column_j1 = int(input("Joueur 1, entrez la colonne : "))
+            row_j1 = int(input("Joueur 1, entrez une ligne : "))
 
-        if 1 > column_j1 > 8 or 1 > row_j1 > 8:
-            print("ce ne sont pas des champs valides")
-        elif grille[row_j1][column_j1] == ".":
-            grille[row_j1][column_j1] = "o"
-            printGrille(grille)
-        elif grille[row_j1][column_j1] == "o" or grille[row_j1][column_j1] == "x":
-            print("ce champ est deja pris")
+            if 1 <= column_j1 <= 8 and 1 <= row_j1 <= 8:
+                if grille[row_j1][column_j1] == ".":
+                    grille[row_j1][column_j1] = "o"
+                    break
+                    break
+                else:
+                    print("Ces champ sont deja pris")
+            else :
+                print("ce ne sont pas des champs valides")
+
+        printGrille(grille)
 
     elif move % 2 == 0:
-        column_j2 = int(input("Joueur 2, entrez entrez la colonne : "))
-        row_j2 = int(input("Joueur 2, entrez une ligne : "))
+        while True:
+            column_j2 = int(input("Joueur 2, entrez la colonne : "))
+            row_j2 = int(input("Joueur 2, entrez une ligne : "))
 
-        if 1 > column_j2 > 8 or 1 > row_j2 > 8:
-            print("ce ne sont pas des champs valides")
-        elif grille[row_j2][column_j2] == ".":
-            grille[row_j2][column_j2] = "x"
-            printGrille(grille)
-        elif grille[row_j2][column_j2] == "o" or grille[row_j2][column_j2] == "x":
-            print("ce champ est deja pris")
+            if 1 <= column_j2 <= 8 and 1 <= row_j2 <= 8:
+                if grille[row_j2][column_j2] == ".":
+                    grille[row_j2][column_j2] = "x"
+                    break
+                    break
+                else:
+                    print("Ces champ sont deja pris")
+            else :
+                print("Cs ne sont pas des champs valides")
+
+        printGrille(grille)
+
+
