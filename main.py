@@ -43,13 +43,12 @@ for move in range(1, 61):
                 if grille[row_j1][column_j1] == ".":
                     grille[row_j1][column_j1] = "o"
                     break
-                    break
                 else:
                     print("Ces champ sont deja pris")
             else :
                 print("ce ne sont pas des champs valides")
 
-        printGrille(grille)
+        #printGrille(grille)
 
     elif move % 2 == 0:
         while True:
@@ -60,12 +59,14 @@ for move in range(1, 61):
                 if grille[row_j2][column_j2] == ".":
                     grille[row_j2][column_j2] = "x"
                     break
-                    break
                 else:
                     print("Ces champ sont deja pris")
             else :
                 print("Cs ne sont pas des champs valides")
 
-        printGrille(grille)
+        #printGrille(grille)
+
+
+
 
 
