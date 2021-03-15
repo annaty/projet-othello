@@ -73,6 +73,70 @@ def check_autour(row, column):
 # ///////////////// DEBUT PARTIE /////////////////////
 cls()
 printGrille(grille)
+
+def return_x_horizontal():
+    # ça retourne x à l'horizontal
+    for row_index in range(len(grille)):
+        start = -1
+        end = -1
+        for column_index in range(len(grille[1])):
+            if grille[row_index][column_index] == "x":
+                if start == -1:
+                    start = column_index
+                else :
+                    end = column_index
+        for index_transform in range(start, end):
+            grille[row_index][index_transform] = "x"
+
+def return_o_horizontal():
+    # ça retourne o à l'horizontal
+    for row_index in range(len(grille)):
+        start = -1
+        end = -1
+        for column_index in range(len(grille[1])):
+            if grille[row_index][column_index] == "o":
+                if start == -1:
+                    start = column_index
+                else :
+                    end = column_index
+        for index_transform in range(start, end):
+            grille[row_index][index_transform] = "o"
+
+# def return_x_vertical():
+#     # ça retourne x à la vertical
+#     for row_index in range(len(grille)):
+#         for column_index in range(len(grille[1])):
+#             if grille[row_index][column_index] == "x" and row_index != row_j2 and column_index == column_j2:
+#                 row_ref = row_index
+#                 break
+#     if row_ref < row_j2:
+#         for index_transform in range(row_ref, row_j2 + 1):
+#             grille[index_transform][column_j1] = "x"
+#     else:
+#         for index_transform in range(row_j2, row_ref + 1):
+#             grille[index_transform][column_j1] = "x"
+
+# def return_o_vertical():
+#     # ça retourne o à la vertical
+#     for row_index in range(len(grille)):
+#         for column_index in range(len(grille[1])):
+#             if grille[row_index][column_index] == "o" and row_index != row_j1 and column_index == column_j1:
+#                 row_ref = row_index
+#                 break
+
+#     if row_ref < row_j1:
+#         for index_transform in range(row_ref, row_j1 + 1):
+#             grille[index_transform][column_j1] = "o"
+#     else:
+#         for index_transform in range(row_j1, row_ref + 1):
+#             grille[index_transform][column_j1] = "o"
+
+
+printGrille(grille)
+
+
+
+# Les coups des uilisatuers se lancent
 for move in range(1, 61):
     print("Tour " + str(move))
     if move % 2 == 1:
@@ -90,8 +154,13 @@ for move in range(1, 61):
                 print("Ce ne sont pas des champs valides")
         cls()
         printGrille(grille)
+        
+        return_o_horizontal()
 
-    elif move % 2 == 0:
+
+        # printGrille(grille)
+
+    if move % 2 == 0:
         while True:
             column_j2 = int(input("Joueur 2, entrez la colonne : "))
             row_j2 = int(input("Joueur 2, entrez une ligne : "))
@@ -104,6 +173,15 @@ for move in range(1, 61):
                     print("Ces champ ne sont pas valides.")
             else:
                 print("Ces champ ne sont pas valides.")
+        
+        return_x_horizontal()
+
+
+    
+    printGrille(grille)
+
+
 
         cls()
         printGrille(grille)
+
