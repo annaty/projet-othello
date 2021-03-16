@@ -1,22 +1,32 @@
 import math
+import os
+import functions
 # Grille d'Othello
 
 grille = []
-for row in range(0, 9):
+for row in range(0, 10):
     grille.append([])
     if row == 0:
         grille[row].append(" ")
-        for column in range(1, 9):
-            grille[row].append(column)
-
+        for column in range(1, 10):
+            if column == 9:
+                grille[row].append("_")
+            else:
+                grille[row].append(column)
+    elif row == 9:
+        for column in range(1, 10):
+            grille[row].append("_")
     else:
         grille[row].append(row)
-        for column in range(1, 9):
-            grille[row].append(".")
+        for column in range(1, 10):
+            if column == 9:
+                grille[row].append("_")
+            else:
+                grille[row].append(".")
 
 # etablir une position de depart
-milieu_ligne = int(math.ceil(len(grille)) / 2)
-milieu_colonne = int(math.ceil(len(grille[0])) / 2)
+milieu_ligne = int(math.floor(len(grille) - 1) / 2)
+milieu_colonne = int(math.floor(len(grille[0]) - 1) / 2)
 
 grille[milieu_ligne][milieu_colonne] = "x"
 grille[milieu_ligne + 1][milieu_colonne + 1] = "x"
@@ -24,46 +34,11 @@ grille[milieu_ligne][milieu_colonne + 1] = "o"
 grille[milieu_ligne + 1][milieu_colonne] = "o"
 
 # formatage affichage de la grille
+# ///////////////// DEBUT PARTIE /////////////////////
+functions.cls()
+functions.printGrille(grille)
 
-
-def printGrille(grille_par):
-    for element in grille_par:
-        for truc in element:
-            print(truc, end=" ")
-        print()
-
-def check_autour(row, column):
-    if row == 1 and column == 1:
-        if grille[row][column + 1] == "." and grille[row + 1][column] == "." and grille[row + 1][column + 1] == ".":
-            return False
-    elif row == 1 and column == (len(grille[1]) - 1):
-        if grille[row][column - 1] == "." and grille[row + 1][column] == "." and grille[row + 1][column - 1] == ".":
-            return False
-    elif row == (len(grille) - 1) and column == 1:
-        if grille[row][column + 1] == "." and grille[row - 1][column] == "." and grille[row - 1][column + 1] == ".":
-            return False
-    elif row == (len(grille) - 1) and column == (len(grille[1]) - 1):
-        if grille[row][column - 1] == "." and grille[row - 1][column] == "." and grille[row - 1][column - 1] == ".":
-            return False   
-    elif row == 1:
-        if grille[row][column - 1] == "." and grille[row][column + 1] == "." and grille[row+1][column] == "." and grille[row + 1][column - 1] == "." and grille[row + 1][column + 1] == ".":
-            return False 
-    elif column == 1:
-        if grille[row][column + 1] == "." and grille[row - 1][column] == "." and grille[row + 1][column] == "." and grille[row - 1][column + 1] == "." and grille[row + 1][column + 1] == ".":
-            return False 
-    elif row == (len(grille) - 1):
-        if grille[row][column - 1] == "." and grille[row][column + 1] == "." and grille[row - 1][column] == "." and grille[row - 1][column + 1] == "." and grille[row - 1][column - 1] == ".":
-            return False
-    elif column == (len(grille[1]) - 1):
-        if grille[row][column - 1] == "." and grille[row + 1][column] == "." and grille[row - 1][column] == "." and grille[row + 1][column - 1] == "." and grille[row - 1][column - 1] == ".":
-            return False
-    elif grille[row - 1][column] == "." and grille[row + 1][column] == "." and grille[row][column - 1] == "." and grille[row][column + 1] == "." and grille[row + 1][column - 1] == "." and grille[row + 1][column + 1] == "." and grille[row - 1][column - 1] == "." and grille[row - 1][column + 1] == ".":
-        return False
-    else: 
-        return True
-
-printGrille(grille)
-
+# Les coups des uilisatuers se lancent
 for move in range(1, 61):
     print("Tour " + str(move))
     if move % 2 == 1:
@@ -72,29 +47,36 @@ for move in range(1, 61):
             row_j1 = int(input("Joueur 1, entrez une ligne : "))
 
             if 1 <= column_j1 <= 8 and 1 <= row_j1 <= 8:
-                if  check_autour(row_j1, column_j1) and grille[row_j1][column_j1] == ".":
+                if functions.check_autour(grille, row_j1, column_j1) and grille[row_j1][column_j1] == ".":
                     grille[row_j1][column_j1] = "o"
                     break
                 else:
-                    print("Ces champ ne sont pas valides.")
+                    print("Placement non autorisé... Regardez les regles du jeu, merci.")
             else:
-                print("Ce ne sont pas des champs valides")
+                print("Placement non autorisé... Regardez les regles du jeu, merci.")
 
-        printGrille(grille)
+        functions.return_o_horizontal(grille, row_j1, column_j1)
+        functions.return_o_vertical(grille, row_j1, column_j1)
+        functions.return_o_diagonal(grille, row_j1, column_j1)
 
-    elif move % 2 == 0:
+    if move % 2 == 0:
         while True:
             column_j2 = int(input("Joueur 2, entrez la colonne : "))
             row_j2 = int(input("Joueur 2, entrez une ligne : "))
 
             if 1 <= column_j2 <= 8 and 1 <= row_j2 <= 8:
-                if check_autour(row_j2, column_j2) and grille[row_j2][column_j2] == ".":
+                if functions.check_autour(grille, row_j2, column_j2) and grille[row_j2][column_j2] == ".":
                     grille[row_j2][column_j2] = "x"
                     break
                 else:
-                    print("Ces champ ne sont pas valides.")
+                    print("Placement non autorisé... Regardez les regles du jeu, merci.")
             else:
-                print("Ces champ ne sont pas valides.")
+                print("Placement non autorisé... Regardez les regles du jeu, merci.")
+        
+        functions.return_x_horizontal(grille, row_j2, column_j2)
+        functions.return_x_vertical(grille, row_j2, column_j2)
 
-        printGrille(grille)
+
+    functions.cls()
+    functions.printGrille(grille)
 
