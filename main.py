@@ -14,13 +14,13 @@ for row in range(0, 10):
             else:
                 grille[row].append(column)
     elif row == 9:
-        for column in range(1, 10):
+        for column in range(1, 11):
             grille[row].append("_")
     else:
         grille[row].append(row)
         for column in range(1, 10):
             if column == 9:
-                grille[row].append("_")
+                grille[row].append("|")
             else:
                 grille[row].append(".")
 
@@ -33,9 +33,8 @@ grille[milieu_ligne + 1][milieu_colonne + 1] = "x"
 grille[milieu_ligne][milieu_colonne + 1] = "o"
 grille[milieu_ligne + 1][milieu_colonne] = "o"
 
-# formatage affichage de la grille
 # ///////////////// DEBUT PARTIE /////////////////////
-functions.cls()
+# functions.cls()
 functions.printGrille(grille)
 
 # Les coups des uilisatuers se lancent
@@ -75,8 +74,7 @@ for move in range(1, 61):
         
         functions.return_x_horizontal(grille, row_j2, column_j2)
         functions.return_x_vertical(grille, row_j2, column_j2)
+        functions.return_x_diagonal(grille, row_j2, column_j2)
 
-
-    functions.cls()
+    # functions.cls()
     functions.printGrille(grille)
-
