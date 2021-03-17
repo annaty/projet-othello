@@ -1,5 +1,6 @@
 #functions
 import os
+import math
 
 def printGrille(grille_par):
     for element in grille_par:
@@ -70,46 +71,6 @@ def return_o_diagonal(grille, row_j1, column_j1):
     check_table = [] 
     if row_j1 < column_j1:
         #NW
-        for i in range(1, row_j1): # row of pion2 < row pion1
-            pion_2 = grille[row_j1 - i][column_j1 - i]
-            check_table.append(pion_2)
-            pion_2_position = (row_j1 - i, column_j1 - i)
-            if pion_2 == "o" and "x" in check_table:
-                for index_transform in range(1, (row_j1 - pion_2_position[0])):
-                    grille[row_j1 - index_transform][column_j1 - index_transform] = "o"
-                check_table.clear()
-
-        #SE
-        for i in range(1, len(grille) - row_j1): # row of pion2 > row pion1
-            pion_2 = grille[row_j1 + i][column_j1 + i]
-            check_table.append(pion_2)
-            pion_2_position = (row_j1 + i, column_j1 + i)
-            if pion_2 == "o" and "x" in check_table:
-                for index_transform in range(1, (pion_2_position[0] - row_j1)):
-                    grille[row_j1 + index_transform][column_j1 + index_transform] = "o"
-                check_table.clear()
-        
-        #SW
-        for i in range(-1, -(len(grille) - row_j1), -1): # row of pion2 > row pion1
-            pion_2 = grille[row_j1 - i][column_j1 + i]
-            check_table.append(pion_2)
-            pion_2_position = (row_j1 - i, column_j1 + i)
-            if pion_2 == "o" and "x" in check_table:
-                for index_transform in range(1, (pion_2_position[0] - row_j1)):
-                    grille[row_j1 + index_transform][column_j1 - index_transform] = "o"
-            check_table.clear()
-
-        #NE
-        for i in range(-1, len(grille) - row_j1, -1): # row of pion2 < row pion1
-            pion_2 = grille[row_j1 + i][column_j1 - i]
-            check_table.append(pion_2)
-            pion_2_position = (row_j1 + i, column_j1 - i)
-            if pion_2 == "o" and "x" in check_table:
-                for index_transform in range(1, (row_j1 - pion_2_position[0])):
-                    grille[row_j1 - index_transform][column_j1 + index_transform] = "o"
-            check_table.clear()
-
-    else:
         for i in range(1, column_j1): # row of pion2 < row pion1
             pion_2 = grille[row_j1 - i][column_j1 - i]
             check_table.append(pion_2)
@@ -149,6 +110,46 @@ def return_o_diagonal(grille, row_j1, column_j1):
                     grille[row_j1 - index_transform][column_j1 + index_transform] = "o"
             check_table.clear()
 
+    else:
+        for i in range(1, row_j1): # row of pion2 < row pion1
+            pion_2 = grille[row_j1 - i][column_j1 - i]
+            check_table.append(pion_2)
+            pion_2_position = (row_j1 - i, column_j1 - i)
+            if pion_2 == "o" and "x" in check_table:
+                for index_transform in range(1, (row_j1 - pion_2_position[0])):
+                    grille[row_j1 - index_transform][column_j1 - index_transform] = "o"
+                check_table.clear()
+
+        #SE
+        for i in range(1, len(grille) - row_j1): # row of pion2 > row pion1
+            pion_2 = grille[row_j1 + i][column_j1 + i]
+            check_table.append(pion_2)
+            pion_2_position = (row_j1 + i, column_j1 + i)
+            if pion_2 == "o" and "x" in check_table:
+                for index_transform in range(1, (pion_2_position[0] - row_j1)):
+                    grille[row_j1 + index_transform][column_j1 + index_transform] = "o"
+                check_table.clear()
+        
+        #SW
+        for i in range(-1, -(len(grille) - row_j1), -1): # row of pion2 > row pion1
+            pion_2 = grille[row_j1 - i][column_j1 + i]
+            check_table.append(pion_2)
+            pion_2_position = (row_j1 - i, column_j1 + i)
+            if pion_2 == "o" and "x" in check_table:
+                for index_transform in range(1, (pion_2_position[0] - row_j1)):
+                    grille[row_j1 + index_transform][column_j1 - index_transform] = "o"
+            check_table.clear()
+
+        #NE
+        for i in range(-1, len(grille) - row_j1, -1): # row of pion2 < row pion1
+            pion_2 = grille[row_j1 + i][column_j1 - i]
+            check_table.append(pion_2)
+            pion_2_position = (row_j1 + i, column_j1 - i)
+            if pion_2 == "o" and "x" in check_table:
+                for index_transform in range(1, (row_j1 - pion_2_position[0])):
+                    grille[row_j1 - index_transform][column_j1 + index_transform] = "o"
+            check_table.clear()
+
 
 def return_x_diagonal(grille, row_j2, column_j2):
     check_table = [] 
@@ -174,7 +175,7 @@ def return_x_diagonal(grille, row_j2, column_j2):
                 check_table.clear()
         
         #SW
-        for i in range(1, len(grille) - row_j2): # row of pion2 > row pion1
+        for i in range(1, len(grille) - column_j2): # row of pion2 > row pion1
             pion_2 = grille[row_j2 + i][column_j2 - i]
             check_table.append(pion_2)
             pion_2_position = (row_j2 + i, column_j2 - i)
@@ -192,7 +193,8 @@ def return_x_diagonal(grille, row_j2, column_j2):
                 for index_transform in range(1, (row_j2 - pion_2_position[0])):
                     grille[row_j2 - index_transform][column_j2 + index_transform] = "x"
                 check_table.clear()
-    else:
+
+    elif row_j2 > column_j2 :
         #NW
         for i in range(1, column_j2): # row of pion2 < row pion1
             pion_2 = grille[row_j2 - i][column_j2 - i]
@@ -204,7 +206,7 @@ def return_x_diagonal(grille, row_j2, column_j2):
                 check_table.clear()
 
         #SE
-        for i in range(1, len(grille) - column_j2): # row of pion2 > row pion1
+        for i in range(1, len(grille) - row_j2): # row of pion2 > row pion1
             pion_2 = grille[row_j2 + i][column_j2 + i]
             check_table.append(pion_2)
             pion_2_position = (row_j2 + i, column_j2 + i)
@@ -214,7 +216,7 @@ def return_x_diagonal(grille, row_j2, column_j2):
                 check_table.clear()
         
         #SW
-        for i in range(1, len(grille) - column_j2): # row of pion2 > row pion1
+        for i in range(1, column_j2): # row of pion2 > row pion1
             pion_2 = grille[row_j2 + i][column_j2 - i]
             check_table.append(pion_2)
             pion_2_position = (row_j2 + i, column_j2 - i)
@@ -225,6 +227,88 @@ def return_x_diagonal(grille, row_j2, column_j2):
 
         #NE
         for i in range(1, len(grille[1]) - column_j2): # row of pion2 < row pion1
+            pion_2 = grille[row_j2 - i][column_j2 + i]
+            check_table.append(pion_2)
+            pion_2_position = (row_j2 - i, column_j2 + i)
+            if pion_2 == "x" and "o" in check_table:
+                for index_transform in range(1, (row_j2 - pion_2_position[0])):
+                    grille[row_j2 - index_transform][column_j2 + index_transform] = "x"
+                check_table.clear()
+
+    elif row_j2 == column_j2 and row_j2 < len(grille) / 2:
+        #NW
+        for i in range(1, row_j2): # row of pion2 < row pion1
+            pion_2 = grille[row_j2 - i][column_j2 - i]
+            check_table.append(pion_2)
+            pion_2_position = (row_j2 - i, column_j2 - i)
+            if pion_2 == "x" and "o" in check_table:
+                for index_transform in range(1, (row_j2 - pion_2_position[0])):
+                    grille[row_j2 - index_transform][column_j2 - index_transform] = "x"
+                check_table.clear()
+
+        #SE
+        for i in range(1, len(grille) - row_j2): # row of pion2 > row pion1
+            pion_2 = grille[row_j2 + i][column_j2 + i]
+            check_table.append(pion_2)
+            pion_2_position = (row_j2 + i, column_j2 + i)
+            if pion_2 == "x" and "o" in check_table:
+                for index_transform in range(1, (pion_2_position[0] - row_j2)):
+                    grille[row_j2 + index_transform][column_j2 + index_transform] = "x"
+                check_table.clear()
+        
+        #SW
+        for i in range(1, row_j2 - 1): # row of pion2 > row pion1
+            pion_2 = grille[row_j2 + i][column_j2 - i]
+            check_table.append(pion_2)
+            pion_2_position = (row_j2 + i, column_j2 - i)
+            if pion_2 == "x" and "o" in check_table:
+                for index_transform in range(1, (pion_2_position[0] - row_j2)):
+                    grille[row_j2 + index_transform][column_j2 - index_transform] = "x"
+                check_table.clear()
+
+        #NE
+        for i in range(1, row_j2 - 1): # row of pion2 < row pion1
+            pion_2 = grille[row_j2 - i][column_j2 + i]
+            check_table.append(pion_2)
+            pion_2_position = (row_j2 - i, column_j2 + i)
+            if pion_2 == "x" and "o" in check_table:
+                for index_transform in range(1, (row_j2 - pion_2_position[0])):
+                    grille[row_j2 - index_transform][column_j2 + index_transform] = "x"
+                check_table.clear()
+
+    elif row_j2 == column_j2 and row_j2 > len(grille) / 2:
+        #NW
+        for i in range(1, math.floor(row_j2 / 2)): # row of pion2 < row pion1
+            pion_2 = grille[row_j2 - i][column_j2 - i]
+            check_table.append(pion_2)
+            pion_2_position = (row_j2 - i, column_j2 - i)
+            if pion_2 == "x" and "o" in check_table:
+                for index_transform in range(1, (row_j2 - pion_2_position[0])):
+                    grille[row_j2 - index_transform][column_j2 - index_transform] = "x"
+                check_table.clear()
+
+        #SE
+        for i in range(1, len(grille) - row_j2): # row of pion2 > row pion1
+            pion_2 = grille[row_j2 + i][column_j2 + i]
+            check_table.append(pion_2)
+            pion_2_position = (row_j2 + i, column_j2 + i)
+            if pion_2 == "x" and "o" in check_table:
+                for index_transform in range(1, (pion_2_position[0] - row_j2)):
+                    grille[row_j2 + index_transform][column_j2 + index_transform] = "x"
+                check_table.clear()
+        
+        #SW
+        for i in range(1, len(grille) - row_j2): # row of pion2 > row pion1
+            pion_2 = grille[row_j2 + i][column_j2 - i]
+            check_table.append(pion_2)
+            pion_2_position = (row_j2 + i, column_j2 - i)
+            if pion_2 == "x" and "o" in check_table:
+                for index_transform in range(1, (pion_2_position[0] - row_j2)):
+                    grille[row_j2 + index_transform][column_j2 - index_transform] = "x"
+                check_table.clear()
+
+        #NE
+        for i in range(1, math.floor((row_j2 / 2 - 1))): # row of pion2 < row pion1
             pion_2 = grille[row_j2 - i][column_j2 + i]
             check_table.append(pion_2)
             pion_2_position = (row_j2 - i, column_j2 + i)
