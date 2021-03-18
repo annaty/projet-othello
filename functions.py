@@ -1,6 +1,7 @@
 #functions
 import os
 
+
 def printGrille(grille_par):
     for element in grille_par:
         for truc in element:
