@@ -34,3 +34,23 @@ print(column_j1)
 #         return False
 #     else:
 #         return True
+
+
+
+
+
+
+# ///////////////////////////////////////// NOS FONCTIONS RETURN /////////////////////////////////////////////////
+
+# def return_x_vertical(grille, row_j2, column_j2):
+#     check_table = []
+#     for row_index in range(len(grille)):
+#         if grille[row_index][column_j2] == "x" and row_index != row_j2 and "o" in check_table:
+#                 if row_index < row_j2:
+#                     for index_transform in range(row_index, row_j2 + 1):
+#                         grille[index_transform][column_j2] = "x"
+#                 else:
+#                     for index_transform in range(row_j2, row_index + 1):
+#                         grille[index_transform][column_j2] = "x"
+#                 break
+#     check_table.clear()
