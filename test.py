@@ -1,11 +1,3 @@
-<<<<<<< HEAD
-while True:
-    column_j1 = int(input("Joueur 1, entrez la colonne : "))
-    row_j1 = int(input("Joueur 1, entrez une ligne : "))
-    break
-
-print(column_j1)
-=======
 ## c'est qui etait au debut du main.py
 # Grille d'Othello
 # while True:
@@ -63,7 +55,6 @@ print(column_j1)
 
 
 ## premier check autour
->>>>>>> 1ed0b9e920e02b0d08a9f97a5d2e8af166034420
 
 # def check_autour(row, column):
 #     if row == 1 and column == 1: #NW corner
