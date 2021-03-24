@@ -21,148 +21,120 @@ def check_autour(grille, row, column):
     else:
         return True
 
-def reached_limit(liste_tour, length_matrix):
-    if "|" in liste_tour or "_" in liste_tour or " " in liste_tour:
+def reached_limit(liste_champs, length_matrix):
+    if "|" in liste_champs or "_" in liste_champs or " " in liste_champs:
         return True
     length_index_list = [index for index in range(1, length_matrix - 1)]
     for element in length_index_list:
-        if element in liste_tour:
+        if element in liste_champs:
             return True
     return False
 
-def flip_horizontal(grille, player, row, column):
+def color_assignment(player):
     if player == "Joueur 1":
-        player_piece = "o"
-        enemy_piece = "x"
+        return 'o', 'x'
     elif player == "Joueur 2":
-        player_piece = "x"
-        enemy_piece = "o"
-    check_table = []
-    i = 0
-    while reached_limit(check_table, len(grille[1])) == False:
-        i+= 1
-        piece_2 = grille[row][column + i] # le pion qui va nous permettre de savoir s'il y a un autre pion de notre joueur sur la meme ligne
-        check_table.append(piece_2)
+        return 'x', 'o'
 
-        piece_2_position = (row, column + i)
-        if piece_2 == player_piece and enemy_piece in check_table:
-            another_checktable = []
-            for index_transform in range(1, (piece_2_position[1] - column)):
-                another_checktable.append(grille[row][column + index_transform])
-            if '.' not in another_checktable:
-                for index_transform in range(1, (piece_2_position[1] - column)):
-                    grille[row][column + index_transform] = player_piece
-    check_table.clear()
-    i = 0
-    while reached_limit(check_table, len(grille[1])) == False:
+def flip_horizontal(grille, player, row, column):
+    player_piece, enemy_piece = color_assignment(player)
+    check_list = [] # une liste qui contient le contenu de toutes les cellules dans la direction donnée, en partant de la pièce que l'on pose, jusqu'au bord
+    i = 0 # une variable utilisée pour suivre le nombre d'itérations de la boucle
+
+    #Eastern check
+    while reached_limit(check_list, len(grille)) == False:
         i+= 1
-        piece_2 = grille[row][column - i]
-        check_table.append(piece_2)
-        piece_2_position = (row, column - i)
-        if piece_2 == player_piece and enemy_piece in check_table:
-            another_checktable = []
-            for index_transform in range(1, (column - piece_2_position[1])):
-                another_checktable.append(grille[row][column - index_transform])
-            if '.' not in another_checktable:
-                for index_transform in range(1, (column - piece_2_position[1])):
-                    grille[row][column - index_transform] = player_piece
-    check_table.clear()
+        east_cell_content = grille[row][column + i]
+        check_list.append(east_cell_content)
+        if east_cell_content == player_piece and (enemy_piece in check_list) and ('.' not in check_list):
+            for index_transform in range(1, i + 1):
+                grille[row][column + index_transform] = player_piece
+    check_list.clear()
     i = 0
+
+    #Western check
+    while reached_limit(check_list, len(grille)) == False:
+        i+= 1
+        west_cell_content = grille[row][column - i]
+        check_list.append(west_cell_content)
+        if west_cell_content == player_piece and (enemy_piece in check_list) and ('.' not in check_list):
+            for index_transform in range(1, i + 1):
+                grille[row][column - index_transform] = player_piece
 
 def flip_vertical(grille, player, row, column):
-    if player == "Joueur 1":
-        player_piece = "o"
-        enemy_piece = "x"
-    elif player == "Joueur 2":
-        player_piece = "x"
-        enemy_piece = "o"
-    check_table = []
+    player_piece, enemy_piece = color_assignment(player)
+    check_list = []
     i = 0
-    while reached_limit(check_table, len(grille[1])) == False:
+
+    #Southern check
+    while reached_limit(check_list, len(grille)) == False:
         i+= 1
-        piece_2 = grille[row + i][column]
-        check_table.append(piece_2)
-        piece_2_position = (row + i, column)
-        if piece_2 == player_piece and enemy_piece in check_table:
-            for index_transform in range(1, (piece_2_position[0] - row)):
-                grille[row + index_transform][column] = player_piece
-    check_table.clear()
+        south_cell_content = grille[row + i][column]
+        check_list.append(south_cell_content)
+        if south_cell_content == player_piece and (enemy_piece in check_list) and ('.' not in check_list):
+                for index_transform in range(1, i + 1):
+                    grille[row + index_transform][column] = player_piece
+    check_list.clear()
     i = 0
-    while reached_limit(check_table, len(grille)) == False:
+
+    #Northern check
+    while reached_limit(check_list, len(grille)) == False:
         i+= 1
-        piece_2 = grille[row - i][column]
-        check_table.append(piece_2)
-        piece_2_position = (row - i, column)
-        if piece_2 == player_piece and enemy_piece in check_table:
-            for index_transform in range(1, (row - piece_2_position[0])):
+        north_cell_content = grille[row - i][column]
+        check_list.append(north_cell_content)
+        if north_cell_content == player_piece and (enemy_piece in check_list) and ('.' not in check_list):
+            for index_transform in range(1, i + 1):
                 grille[row - index_transform][column] = player_piece
-    check_table.clear()
-    i = 0
 
 def flip_diagonal(grille, player, row, column):
-    if player == "Joueur 1":
-        player_piece = "o"
-        enemy_piece = "x"
-    elif player == "Joueur 2":
-        player_piece = "x"
-        enemy_piece = "o"
-    check_table=[]
+    player_piece, enemy_piece = color_assignment(player)
+    check_list=[]
     i = 0
 
-    #NW
-    while reached_limit(check_table, len(grille)) == False:
-        i+= 1
-        piece_2 = grille[row - i][column - i]
-        check_table.append(piece_2)
-        piece_2_position = (row - i, column - i)
-        if piece_2 == player_piece and enemy_piece in check_table:
-            for index_transform in range (1, row - piece_2_position[0]):
+    #NW check
+    while reached_limit(check_list, len(grille)) == False:
+        i += 1
+        nw_cell_content = grille[row - i][column - i]
+        check_list.append(nw_cell_content)
+        if nw_cell_content == player_piece and (enemy_piece in check_list) and ('.' not in check_list):
+            for index_transform in range (1, i + 1):
                 grille[row - index_transform][column - index_transform] = player_piece
-    check_table.clear()
+    check_list.clear()
     i = 0
 
-    #SE
-    while reached_limit(check_table, len(grille)) == False:
+    #SE check
+    while reached_limit(check_list, len(grille)) == False:
         i+= 1
-        piece_2 = grille[row + i][column + i]
-        print(piece_2)
-        check_table.append(piece_2)
-        piece_2_position = (row + i, column + i)
-        if piece_2 == player_piece and enemy_piece in check_table:
-            for index_transform in range(1, (piece_2_position[0] - row)):
+        se_cell_content = grille[row + i][column + i]
+        check_list.append(se_cell_content)
+        if se_cell_content == player_piece and (enemy_piece in check_list) and ('.' not in check_list):
+            for index_transform in range(1, i + 1):
                 grille[row + index_transform][column + index_transform] = player_piece
-    check_table.clear()
+    check_list.clear()
     i = 0
 
-    #SW
-    while reached_limit(check_table, len(grille)) == False:
+    #SW check
+    while reached_limit(check_list, len(grille)) == False:
         i+= 1
-        piece_2 = grille[row + i][column - i]
-        check_table.append(piece_2)
-        piece_2_position = (row + i, column - i)
-        if piece_2 == player_piece and enemy_piece in check_table:
-            for index_transform in range(1, (piece_2_position[0] - row)):
+        sw_cell_content = grille[row + i][column - i]
+        check_list.append(sw_cell_content)
+        if sw_cell_content== player_piece and (enemy_piece in check_list) and ('.' not in check_list):
+            for index_transform in range(1, i + 1):
                 grille[row + index_transform][column - index_transform] = player_piece
-    check_table.clear()
+    check_list.clear()
     i = 0
 
-    #NE
-    while reached_limit(check_table, len(grille)) == False: # row of pion2 < row pion1
+    #NE check
+    while reached_limit(check_list, len(grille)) == False:
         i+= 1
-        piece_2 = grille[row - i][column + i]
-        check_table.append(piece_2)
-        piece_2_position = (row - i, column + i)
-        if piece_2 == player_piece and enemy_piece in check_table:
-            for index_transform in range(1, (row - piece_2_position[0])):
+        ne_cell_content = grille[row - i][column + i]
+        check_list.append(ne_cell_content)
+        if ne_cell_content == player_piece and (enemy_piece in check_list) and ('.' not in check_list):
+            for index_transform in range(1, i + 1):
                 grille[row - index_transform][column + index_transform] = player_piece
-    check_table.clear()
-    i = 0
 
 def user_move(grille, player):
-    if player == "Joueur 1":
-        player_piece = "o"
-    elif player == "Joueur 2":
-        player_piece = "x"
+    player_piece, enemy_piece = color_assignment(player)
     while True:
         while True:
             column = input("{}, entrez la colonne : ".format(player))
