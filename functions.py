@@ -46,8 +46,12 @@ def flip_horizontal(grille, player, row, column):
 
         piece_2_position = (row, column + i)
         if piece_2 == player_piece and enemy_piece in check_table:
+            another_checktable = []
             for index_transform in range(1, (piece_2_position[1] - column)):
-                grille[row][column + index_transform] = player_piece
+                another_checktable.append(grille[row][column + index_transform])
+            if '.' not in another_checktable:
+                for index_transform in range(1, (piece_2_position[1] - column)):
+                    grille[row][column + index_transform] = player_piece
     check_table.clear()
     i = 0
     while reached_limit(check_table, len(grille[1])) == False:
@@ -56,8 +60,12 @@ def flip_horizontal(grille, player, row, column):
         check_table.append(piece_2)
         piece_2_position = (row, column - i)
         if piece_2 == player_piece and enemy_piece in check_table:
+            another_checktable = []
             for index_transform in range(1, (column - piece_2_position[1])):
-                grille[row][column - index_transform] = player_piece
+                another_checktable.append(grille[row][column - index_transform])
+            if '.' not in another_checktable:
+                for index_transform in range(1, (column - piece_2_position[1])):
+                    grille[row][column - index_transform] = player_piece
     check_table.clear()
     i = 0
 
