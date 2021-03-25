@@ -1,9 +1,40 @@
-while True:
-    column_j1 = int(input("Joueur 1, entrez la colonne : "))
-    row_j1 = int(input("Joueur 1, entrez une ligne : "))
-    break
+def clear_helpers(move_list, counter):
+    move_list.clear()
+    counter = 0
 
-print(column_j1)
+def empty_cell_in_list(grille, row, column):
+
+
+def flip(grille, player, row, column):
+    if player == "Joueur 1":
+        player_piece = "o"
+        enemy_piece = "x"
+    elif player == "Joueur 2":
+        player_piece = "x"
+        enemy_piece = "o"
+
+    check_list = []
+    i = 0
+
+    while reached_limit(check_list, len(grille[1])) == False:
+        i += 1
+        east_cell_content = grille[row][column + i] 
+        check_list.append(east_cell_content)
+
+        if east_cell_content == player_piece and enemy_piece in check_list:
+            another_check_list = []
+            for index_transform in range(1, i):
+                another_check_list.append(grille[row][column + index_transform])
+            if '.' not in another_check_list:
+                for index_transform in range(1, i):
+                    grille [row, column + index_transform] = player_piece
+
+
+
+# west_check = [grille[row][column - i]], row, column - i]
+#         south_check = [grille[row + i][column]], row + i, column]
+#         north_check = [grille[row  - i][column]], row - i, column]
+
 ## c'est qui etait au debut du main.py
 # Grille d'Othello
 # while True:
@@ -92,7 +123,10 @@ print(column_j1)
 #     else:
 #         return True
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 2b4ce033c76fd71181059b23d2f28d6c442c334c
 
 
 
@@ -211,4 +245,7 @@ print(column_j1)
 #                 grille[row_j2 - index_transform][column_j2 + index_transform] = "x"
 #     check_table.clear()
 #     i = 0
+<<<<<<< HEAD
 >>>>>>> 1ed0b9e920e02b0d08a9f97a5d2e8af166034420
+=======
+>>>>>>> 2b4ce033c76fd71181059b23d2f28d6c442c334c
