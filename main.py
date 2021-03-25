@@ -42,7 +42,6 @@ grille[milieu_ligne + 1][milieu_colonne + 1] = "x"
 grille[milieu_ligne][milieu_colonne + 1] = "o"
 grille[milieu_ligne + 1][milieu_colonne] = "o"
 
-# formatage affichage de la grille
 # ///////////////// DEBUT PARTIE /////////////////////
 #functions.cls()
 functions.printGrille(grille)
