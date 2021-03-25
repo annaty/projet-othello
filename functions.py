@@ -1,6 +1,9 @@
 #functions
 import os
+<<<<<<< HEAD
 import math
+=======
+>>>>>>> 1ed0b9e920e02b0d08a9f97a5d2e8af166034420
 
 def printGrille(grille_par):
     for element in grille_par:
@@ -12,7 +15,10 @@ def printGrille(grille_par):
 def cls():
     os.system('cls' if os.name == 'nt' else 'clear')
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1ed0b9e920e02b0d08a9f97a5d2e8af166034420
 def check_autour(grille, row, column):
     if (grille[row - 1][column] != "x" and grille[row + 1][column] != "x" and grille[row][column - 1] != "x" 
             and grille[row][column + 1] != "x" and grille[row + 1][column - 1] != "x" and grille[row + 1][column + 1] != "x" 
@@ -23,417 +29,179 @@ def check_autour(grille, row, column):
     else:
         return True
 
-def return_o_horizontal(grille, row_j1, column_j1):
-    for element in range(len(grille[row_j1])):
-        if grille[row_j1][element] == "o" and element != column_j1:
-            if element < column_j1:
-                for index_transform in range(element, column_j1):
-                    grille[row_j1][index_transform] = "o"
-            else:
-                for index_transform in range(column_j1, element):
-                    grille[row_j1][index_transform] = "o"
-            break
-
-def return_x_horizontal(grille, row_j2, column_j2):
-    for element in range(len(grille[row_j2])):
-        if grille[row_j2][element] == "x" and element != column_j2:
-            if element < column_j2:
-                for index_transform in range(element, column_j2):
-                    grille[row_j2][index_transform] = "x"
-            else:
-                for index_transform in range(column_j2, element):
-                    grille[row_j2][index_transform] = "x"
-            break
-
-def return_o_vertical(grille, row_j1, column_j1):
-    for row_index in range(len(grille)):
-        if grille[row_index][column_j1] == "o" and row_index != row_j1:
-                if row_index < row_j1:
-                    for index_transform in range(row_index, row_j1 + 1):
-                        grille[index_transform][column_j1] = "o"
-                else:
-                    for index_transform in range(row_j1, row_index + 1):
-                        grille[index_transform][column_j1] = "o"
-                break
-
-def return_x_vertical(grille, row_j2, column_j2):
-    for row_index in range(len(grille)):
-        if grille[row_index][column_j2] == "x" and row_index != row_j2:
-                if row_index < row_j2:
-                    for index_transform in range(row_index, row_j2 + 1):
-                        grille[index_transform][column_j2] = "x"
-                else:
-                    for index_transform in range(row_j2, row_index + 1):
-                        grille[index_transform][column_j2] = "x"
-                break
-
-# def return_o_diagonal(grille, row_j1, column_j1):
-#     check_table = [] 
-#     if row_j1 < column_j1:
-#         #NW
-#         for i in range(1, column_j1): # row of pion2 < row pion1
-#             pion_2 = grille[row_j1 - i][column_j1 - i]
-#             check_table.append(pion_2)
-#             pion_2_position = (row_j1 - i, column_j1 - i)
-#             if pion_2 == "o" and "x" in check_table:
-#                 for index_transform in range(1, (row_j1 - pion_2_position[0])):
-#                     grille[row_j1 - index_transform][column_j1 - index_transform] = "o"
-#                 check_table.clear()
-
-#         #SE
-#         for i in range(1, len(grille) - column_j1): # row of pion2 > row pion1
-#             pion_2 = grille[row_j1 + i][column_j1 + i]
-#             check_table.append(pion_2)
-#             pion_2_position = (row_j1 + i, column_j1 + i)
-#             if pion_2 == "o" and "x" in check_table:
-#                 for index_transform in range(1, (pion_2_position[0] - row_j1)):
-#                     grille[row_j1 + index_transform][column_j1 + index_transform] = "o"
-#                 check_table.clear()
-        
-#         #SW
-#         for i in range(-1, -(len(grille) - column_j1), -1): # row of pion2 > row pion1
-#             pion_2 = grille[row_j1 - i][column_j1 + i]
-#             check_table.append(pion_2)
-#             pion_2_position = (row_j1 - i, column_j1 + i)
-#             if pion_2 == "o" and "x" in check_table:
-#                 for index_transform in range(1, (pion_2_position[0] - row_j1)):
-#                     grille[row_j1 + index_transform][column_j1 - index_transform] = "o"
-#             check_table.clear()
-
-#         #NE
-#         for i in range(-1, len(grille) - column_j1, -1): # row of pion2 < row pion1
-#             pion_2 = grille[row_j1 + i][column_j1 - i]
-#             check_table.append(pion_2)
-#             pion_2_position = (row_j1 + i, column_j1 - i)
-#             if pion_2 == "o" and "x" in check_table:
-#                 for index_transform in range(1, (row_j1 - pion_2_position[0])):
-#                     grille[row_j1 - index_transform][column_j1 + index_transform] = "o"
-#             check_table.clear()
-
-#     else:
-#         for i in range(1, row_j1): # row of pion2 < row pion1
-#             pion_2 = grille[row_j1 - i][column_j1 - i]
-#             check_table.append(pion_2)
-#             pion_2_position = (row_j1 - i, column_j1 - i)
-#             if pion_2 == "o" and "x" in check_table:
-#                 for index_transform in range(1, (row_j1 - pion_2_position[0])):
-#                     grille[row_j1 - index_transform][column_j1 - index_transform] = "o"
-#                 check_table.clear()
-
-#         #SE
-#         for i in range(1, len(grille) - row_j1): # row of pion2 > row pion1
-#             pion_2 = grille[row_j1 + i][column_j1 + i]
-#             check_table.append(pion_2)
-#             pion_2_position = (row_j1 + i, column_j1 + i)
-#             if pion_2 == "o" and "x" in check_table:
-#                 for index_transform in range(1, (pion_2_position[0] - row_j1)):
-#                     grille[row_j1 + index_transform][column_j1 + index_transform] = "o"
-#                 check_table.clear()
-        
-#         #SW
-#         for i in range(-1, -(len(grille) - row_j1), -1): # row of pion2 > row pion1
-#             pion_2 = grille[row_j1 - i][column_j1 + i]
-#             check_table.append(pion_2)
-#             pion_2_position = (row_j1 - i, column_j1 + i)
-#             if pion_2 == "o" and "x" in check_table:
-#                 for index_transform in range(1, (pion_2_position[0] - row_j1)):
-#                     grille[row_j1 + index_transform][column_j1 - index_transform] = "o"
-#             check_table.clear()
-
-#         #NE
-#         for i in range(-1, len(grille) - row_j1, -1): # row of pion2 < row pion1
-#             pion_2 = grille[row_j1 + i][column_j1 - i]
-#             check_table.append(pion_2)
-#             pion_2_position = (row_j1 + i, column_j1 - i)
-#             if pion_2 == "o" and "x" in check_table:
-#                 for index_transform in range(1, (row_j1 - pion_2_position[0])):
-#                     grille[row_j1 - index_transform][column_j1 + index_transform] = "o"
-#             check_table.clear()
-
-
-# def return_x_diagonal(grille, row_j2, column_j2):
-#     check_table = [] 
-#     if row_j2 < column_j2:
-#         #NW
-#         for i in range(1, row_j2): # row of pion2 < row pion1
-#             pion_2 = grille[row_j2 - i][column_j2 - i]
-#             check_table.append(pion_2)
-#             pion_2_position = (row_j2 - i, column_j2 - i)
-#             if pion_2 == "x" and "o" in check_table:
-#                 for index_transform in range(1, (row_j2 - pion_2_position[0])):
-#                     grille[row_j2 - index_transform][column_j2 - index_transform] = "x"
-#                 check_table.clear()
-
-#         #SE
-#         for i in range(1, len(grille) - row_j2): # row of pion2 > row pion1
-#             pion_2 = grille[row_j2 + i][column_j2 + i]
-#             check_table.append(pion_2)
-#             pion_2_position = (row_j2 + i, column_j2 + i)
-#             if pion_2 == "x" and "o" in check_table:
-#                 for index_transform in range(1, (pion_2_position[0] - row_j2)):
-#                     grille[row_j2 + index_transform][column_j2 + index_transform] = "x"
-#                 check_table.clear()
-        
-#         #SW
-#         for i in range(1, len(grille) - column_j2): # row of pion2 > row pion1
-#             pion_2 = grille[row_j2 + i][column_j2 - i]
-#             check_table.append(pion_2)
-#             pion_2_position = (row_j2 + i, column_j2 - i)
-#             if pion_2 == "x" and "o" in check_table:
-#                 for index_transform in range(1, (pion_2_position[0] - row_j2)):
-#                     grille[row_j2 + index_transform][column_j2 - index_transform] = "x"
-#                 check_table.clear()
-
-#         #NE
-#         for i in range(1, len(grille[1]) - column_j2): # row of pion2 < row pion1
-#             pion_2 = grille[row_j2 - i][column_j2 + i]
-#             check_table.append(pion_2)
-#             pion_2_position = (row_j2 - i, column_j2 + i)
-#             if pion_2 == "x" and "o" in check_table:
-#                 for index_transform in range(1, (row_j2 - pion_2_position[0])):
-#                     grille[row_j2 - index_transform][column_j2 + index_transform] = "x"
-#                 check_table.clear()
-
-#     elif row_j2 > column_j2 :
-#         #NW
-#         for i in range(1, column_j2): # row of pion2 < row pion1
-#             pion_2 = grille[row_j2 - i][column_j2 - i]
-#             check_table.append(pion_2)
-#             pion_2_position = (row_j2 - i, column_j2 - i)
-#             if pion_2 == "x" and "o" in check_table:
-#                 for index_transform in range(1, (row_j2 - pion_2_position[0])):
-#                     grille[row_j2 - index_transform][column_j2 - index_transform] = "x"
-#                 check_table.clear()
-
-#         #SE
-#         for i in range(1, len(grille) - row_j2): # row of pion2 > row pion1
-#             pion_2 = grille[row_j2 + i][column_j2 + i]
-#             check_table.append(pion_2)
-#             pion_2_position = (row_j2 + i, column_j2 + i)
-#             if pion_2 == "x" and "o" in check_table:
-#                 for index_transform in range(1, (pion_2_position[0] - row_j2)):
-#                     grille[row_j2 + index_transform][column_j2 + index_transform] = "x"
-#                 check_table.clear()
-        
-#         #SW
-#         for i in range(1, column_j2): # row of pion2 > row pion1
-#             pion_2 = grille[row_j2 + i][column_j2 - i]
-#             check_table.append(pion_2)
-#             pion_2_position = (row_j2 + i, column_j2 - i)
-#             if pion_2 == "x" and "o" in check_table:
-#                 for index_transform in range(1, (pion_2_position[0] - row_j2)):
-#                     grille[row_j2 + index_transform][column_j2 - index_transform] = "x"
-#                 check_table.clear()
-
-#         #NE
-#         for i in range(1, len(grille[1]) - column_j2): # row of pion2 < row pion1
-#             pion_2 = grille[row_j2 - i][column_j2 + i]
-#             check_table.append(pion_2)
-#             pion_2_position = (row_j2 - i, column_j2 + i)
-#             if pion_2 == "x" and "o" in check_table:
-#                 for index_transform in range(1, (row_j2 - pion_2_position[0])):
-#                     grille[row_j2 - index_transform][column_j2 + index_transform] = "x"
-#                 check_table.clear()
-
-#     elif row_j2 == column_j2 and row_j2 < len(grille) / 2:
-#         #NW
-#         for i in range(1, row_j2): # row of pion2 < row pion1
-#             pion_2 = grille[row_j2 - i][column_j2 - i]
-#             check_table.append(pion_2)
-#             pion_2_position = (row_j2 - i, column_j2 - i)
-#             if pion_2 == "x" and "o" in check_table:
-#                 for index_transform in range(1, (row_j2 - pion_2_position[0])):
-#                     grille[row_j2 - index_transform][column_j2 - index_transform] = "x"
-#                 check_table.clear()
-
-#         #SE
-#         for i in range(1, len(grille) - row_j2): # row of pion2 > row pion1
-#             pion_2 = grille[row_j2 + i][column_j2 + i]
-#             check_table.append(pion_2)
-#             pion_2_position = (row_j2 + i, column_j2 + i)
-#             if pion_2 == "x" and "o" in check_table:
-#                 for index_transform in range(1, (pion_2_position[0] - row_j2)):
-#                     grille[row_j2 + index_transform][column_j2 + index_transform] = "x"
-#                 check_table.clear()
-        
-#         #SW
-#         for i in range(1, row_j2 - 1): # row of pion2 > row pion1
-#             pion_2 = grille[row_j2 + i][column_j2 - i]
-#             check_table.append(pion_2)
-#             pion_2_position = (row_j2 + i, column_j2 - i)
-#             if pion_2 == "x" and "o" in check_table:
-#                 for index_transform in range(1, (pion_2_position[0] - row_j2)):
-#                     grille[row_j2 + index_transform][column_j2 - index_transform] = "x"
-#                 check_table.clear()
-
-#         #NE
-#         for i in range(1, row_j2 - 1): # row of pion2 < row pion1
-#             pion_2 = grille[row_j2 - i][column_j2 + i]
-#             check_table.append(pion_2)
-#             pion_2_position = (row_j2 - i, column_j2 + i)
-#             if pion_2 == "x" and "o" in check_table:
-#                 for index_transform in range(1, (row_j2 - pion_2_position[0])):
-#                     grille[row_j2 - index_transform][column_j2 + index_transform] = "x"
-#                 check_table.clear()
-
-#     elif row_j2 == column_j2 and row_j2 > len(grille) / 2:
-#         #NW
-#         for i in range(1, math.floor(row_j2 / 2)): # row of pion2 < row pion1
-#             pion_2 = grille[row_j2 - i][column_j2 - i]
-#             check_table.append(pion_2)
-#             pion_2_position = (row_j2 - i, column_j2 - i)
-#             if pion_2 == "x" and "o" in check_table:
-#                 for index_transform in range(1, (row_j2 - pion_2_position[0])):
-#                     grille[row_j2 - index_transform][column_j2 - index_transform] = "x"
-#                 check_table.clear()
-
-#         #SE
-#         for i in range(1, len(grille) - row_j2): # row of pion2 > row pion1
-#             pion_2 = grille[row_j2 + i][column_j2 + i]
-#             check_table.append(pion_2)
-#             pion_2_position = (row_j2 + i, column_j2 + i)
-#             if pion_2 == "x" and "o" in check_table:
-#                 for index_transform in range(1, (pion_2_position[0] - row_j2)):
-#                     grille[row_j2 + index_transform][column_j2 + index_transform] = "x"
-#                 check_table.clear()
-        
-#         #SW
-#         for i in range(1, len(grille) - row_j2): # row of pion2 > row pion1
-#             pion_2 = grille[row_j2 + i][column_j2 - i]
-#             check_table.append(pion_2)
-#             pion_2_position = (row_j2 + i, column_j2 - i)
-#             if pion_2 == "x" and "o" in check_table:
-#                 for index_transform in range(1, (pion_2_position[0] - row_j2)):
-#                     grille[row_j2 + index_transform][column_j2 - index_transform] = "x"
-#                 check_table.clear()
-
-#         #NE
-#         for i in range(1, math.floor((row_j2 / 2 - 1))): # row of pion2 < row pion1
-#             pion_2 = grille[row_j2 - i][column_j2 + i]
-#             check_table.append(pion_2)
-#             pion_2_position = (row_j2 - i, column_j2 + i)
-#             if pion_2 == "x" and "o" in check_table:
-#                 for index_transform in range(1, (row_j2 - pion_2_position[0])):
-#                     grille[row_j2 - index_transform][column_j2 + index_transform] = "x"
-#                 check_table.clear()
-
-def reached_limit(list, length_matrix):
-    if "|" in list or "_" in list or " " in list:
+def reached_limit(liste_tour, length_matrix):
+    if "|" in liste_tour or "_" in liste_tour or " " in liste_tour:
         return True
-    length_index_list = [index for index in range(0, length_matrix)]
+    length_index_list = [index for index in range(1, length_matrix - 1)]
     for element in length_index_list:
-        if element in list:
+        if element in liste_tour:
             return True
     return False
 
-def return_o_diagonal(grille, row_j1, column_j1):
-    check_table = [] 
+def flip_horizontal(grille, player, row, column):
+    if player == "Joueur 1":
+        player_piece = "o"
+        enemy_piece = "x"
+    elif player == "Joueur 2":
+        player_piece = "x"
+        enemy_piece = "o"
+    check_table = []
     i = 0
-    #NW
-    while reached_limit(check_table, len(grille)) == False: # row of pion2 < row pion1
+    while reached_limit(check_table, len(grille[1])) == False:
         i+= 1
-        pion_2 = grille[row_j1 - i][column_j1 - i]
-        check_table.append(pion_2)
-        pion_2_position = (row_j1 - i, column_j1 - i)
-        if pion_2 == "o" and "x" in check_table:
-            for index_transform in range(1, (row_j1 - pion_2_position[0])):
-                grille[row_j1 - index_transform][column_j1 - index_transform] = "o"
+        piece_2 = grille[row][column + i] # le pion qui va nous permettre de savoir s'il y a un autre pion de notre joueur sur la meme ligne
+        check_table.append(piece_2)
+
+        piece_2_position = (row, column + i)
+        if piece_2 == player_piece and enemy_piece in check_table:
+            for index_transform in range(1, (piece_2_position[1] - column)):
+                grille[row][column + index_transform] = player_piece
+    check_table.clear()
+    i = 0
+    while reached_limit(check_table, len(grille[1])) == False:
+        i+= 1
+        piece_2 = grille[row][column - i]
+        check_table.append(piece_2)
+        piece_2_position = (row, column - i)
+        if piece_2 == player_piece and enemy_piece in check_table:
+            for index_transform in range(1, (column - piece_2_position[1])):
+                grille[row][column - index_transform] = player_piece
+    check_table.clear()
+    i = 0
+
+def flip_vertical(grille, player, row, column):
+    if player == "Joueur 1":
+        player_piece = "o"
+        enemy_piece = "x"
+    elif player == "Joueur 2":
+        player_piece = "x"
+        enemy_piece = "o"
+    check_table = []
+    i = 0
+    while reached_limit(check_table, len(grille[1])) == False:
+        i+= 1
+        piece_2 = grille[row + i][column]
+        check_table.append(piece_2)
+        piece_2_position = (row + i, column)
+        if piece_2 == player_piece and enemy_piece in check_table:
+            for index_transform in range(1, (piece_2_position[0] - row)):
+                grille[row + index_transform][column] = player_piece
+    check_table.clear()
+    i = 0
+    while reached_limit(check_table, len(grille)) == False:
+        i+= 1
+        piece_2 = grille[row - i][column]
+        check_table.append(piece_2)
+        piece_2_position = (row - i, column)
+        if piece_2 == player_piece and enemy_piece in check_table:
+            for index_transform in range(1, (row - piece_2_position[0])):
+                grille[row - index_transform][column] = player_piece
+    check_table.clear()
+    i = 0
+
+def flip_diagonal(grille, player, row, column):
+    if player == "Joueur 1":
+        player_piece = "o"
+        enemy_piece = "x"
+    elif player == "Joueur 2":
+        player_piece = "x"
+        enemy_piece = "o"
+    check_table=[]
+    i = 0
+
+    #NW
+    while reached_limit(check_table, len(grille)) == False:
+        i+= 1
+        piece_2 = grille[row - i][column - i]
+        check_table.append(piece_2)
+        piece_2_position = (row - i, column - i)
+        if piece_2 == player_piece and enemy_piece in check_table:
+            for index_transform in range (1, row - piece_2_position[0]):
+                grille[row - index_transform][column - index_transform] = player_piece
     check_table.clear()
     i = 0
 
     #SE
-    while reached_limit(check_table, len(grille)) == False: # row of pion2 > row pion1
+    while reached_limit(check_table, len(grille)) == False:
         i+= 1
-        pion_2 = grille[row_j1 + i][column_j1 + i]
-        check_table.append(pion_2)
-        pion_2_position = (row_j1 + i, column_j1 + i)
-        if pion_2 == "o" and "x" in check_table:
-            for index_transform in range(1, (pion_2_position[0] - row_j1)):
-                grille[row_j1 + index_transform][column_j1 + index_transform] = "o"
-    check_table.clear()
-    i = 0
-    
-    #SW
-    while reached_limit(check_table, len(grille)) == False: # row of pion2 > row pion1
-        i+= 1
-        pion_2 = grille[row_j1 - i][column_j1 + i]
-        check_table.append(pion_2)
-        pion_2_position = (row_j1 - i, column_j1 + i)
-        if pion_2 == "o" and "x" in check_table:
-            for index_transform in range(1, (pion_2_position[0] - row_j1)):
-                grille[row_j1 + index_transform][column_j1 - index_transform] = "o"
-    check_table.clear()
-    i = 0
-    #NE
-    while reached_limit(check_table, len(grille)) == False: # row of pion2 < row pion1
-        i+= 1
-        pion_2 = grille[row_j1 + i][column_j1 - i]
-        check_table.append(pion_2)
-        pion_2_position = (row_j1 + i, column_j1 - i)
-        if pion_2 == "o" and "x" in check_table:
-            for index_transform in range(1, (row_j1 - pion_2_position[0])):
-                grille[row_j1 - index_transform][column_j1 + index_transform] = "o"
+        piece_2 = grille[row + i][column + i]
+        print(piece_2)
+        check_table.append(piece_2)
+        piece_2_position = (row + i, column + i)
+        if piece_2 == player_piece and enemy_piece in check_table:
+            for index_transform in range(1, (piece_2_position[0] - row)):
+                grille[row + index_transform][column + index_transform] = player_piece
     check_table.clear()
     i = 0
 
-def return_x_diagonal(grille, row_j2, column_j2):
-    check_table = [] 
-    i = 0
-    #NW
-    while reached_limit(check_table, len(grille)) == False: # row of pion2 < row pion1
-        i +=1
-        pion_2 = grille[row_j2 - i][column_j2 - i]
-        check_table.append(pion_2)
-        pion_2_position = (row_j2 - i, column_j2 - i)
-        if pion_2 == "x" and "o" in check_table:
-            for index_transform in range(1, (row_j2 - pion_2_position[0])):
-                grille[row_j2 - index_transform][column_j2 - index_transform] = "x"    
-    check_table.clear()
-    i = 0
-    #SE
-    while reached_limit(check_table, len(grille)) == False: # row of pion2 > row pion1
-        i +=1
-        pion_2 = grille[row_j2 + i][column_j2 + i]
-        check_table.append(pion_2)
-        pion_2_position = (row_j2 + i, column_j2 + i)
-        if pion_2 == "x" and "o" in check_table:
-            for index_transform in range(1, (pion_2_position[0] - row_j2)):
-                grille[row_j2 + index_transform][column_j2 + index_transform] = "x"
-    check_table.clear()
-    i = 0
     #SW
-    while reached_limit(check_table, len(grille)) == False: # row of pion2 > row pion1
-        i +=1
-        pion_2 = grille[row_j2 + i][column_j2 - i]
-        check_table.append(pion_2)
-        pion_2_position = (row_j2 + i, column_j2 - i)
-        if pion_2 == "x" and "o" in check_table:
-            for index_transform in range(1, (pion_2_position[0] - row_j2)):
-                grille[row_j2 + index_transform][column_j2 - index_transform] = "x"
-    check_table.clear()
-    i = 0
-    #NE
-    while reached_limit(check_table, len(grille)) == False: # row of pion2 < row pion1
-        i +=1
-        pion_2 = grille[row_j2 - i][column_j2 + i]
-        check_table.append(pion_2)
-        pion_2_position = (row_j2 - i, column_j2 + i)
-        if pion_2 == "x" and "o" in check_table:
-            for index_transform in range(1, (row_j2 - pion_2_position[0])):
-                grille[row_j2 - index_transform][column_j2 + index_transform] = "x"
+    while reached_limit(check_table, len(grille)) == False:
+        i+= 1
+        piece_2 = grille[row + i][column - i]
+        check_table.append(piece_2)
+        piece_2_position = (row + i, column - i)
+        if piece_2 == player_piece and enemy_piece in check_table:
+            for index_transform in range(1, (piece_2_position[0] - row)):
+                grille[row + index_transform][column - index_transform] = player_piece
     check_table.clear()
     i = 0
 
-    # for i in range(1, 2):
-    #     if grille[row_j1 + i][column_j1 + i] == "o": # SE
-    #         for index_transform in range(1, i):
-    #             grille[row_j1 + i][column_j1 + i] = "o"
-    #     elif grille[row_j1 - i][column_j1 - i] == "o": # NO
-    #         for index_transform in range(1, i):
-    #             grille[row_j1 - i][column_j1 - i] = "o"
-    #     elif grille[row_j1 + i][column_j1 - i] == "o": # SO
-    #         for index_transform in range(1, i):
-    #             grille[row_j1 + i][column_j1 - i] = "o"
-    #     elif grille[row_j1 - i][column_j1 + i] == "o": # NE
-    #         for index_transform in range(1, i):
-    #             grille[row_j1 - i][column_j1 + i] = "o"
+    #NE
+    while reached_limit(check_table, len(grille)) == False: # row of pion2 < row pion1
+        i+= 1
+        piece_2 = grille[row - i][column + i]
+        check_table.append(piece_2)
+        piece_2_position = (row - i, column + i)
+        if piece_2 == player_piece and enemy_piece in check_table:
+            for index_transform in range(1, (row - piece_2_position[0])):
+                grille[row - index_transform][column + index_transform] = player_piece
+    check_table.clear()
+    i = 0
+
+def user_move(grille, player):
+    if player == "Joueur 1":
+        player_piece = "o"
+    elif player == "Joueur 2":
+        player_piece = "x"
+    while True:
+        while True:
+            column = input("{}, entrez la colonne : ".format(player))
+            try:
+                column = int(column)
+                break
+            except:
+                print("Saisie non valide...")
+        while True:
+            row = input("{}, entrez une ligne : ".format(player))
+            try:
+                row = int(row)
+                break
+            except:
+                print("Saisie non valide...")
+
+        if 1 <= column <= 8 and 1 <= row <= 8:
+            if check_autour(grille, row, column) and grille[row][column] == ".":
+                grille[row][column] = player_piece
+                break
+            else:
+                print("Placement non autorisé... Regardez les regles du jeu, merci.")
+        else:
+            print("Placement non autorisé... Regardez les regles du jeu, merci.")
+    return row, column
+
+
+def is_winner(grille):
+    count_o = 0
+    count_x = 0
+    for row in grille:
+        for element in row:
+            if element == "o":
+                count_o +=1
+            elif element == "x":
+                count_x += 1
+    if count_o > count_x:
+        print("Le joueur 1 a gagné 1️⃣!")
+    elif count_o < count_x:
+        print("Le joueur 2 a gagné 2️⃣!")
+    else:
+        print("Egalité 😳!")
