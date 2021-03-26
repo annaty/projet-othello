@@ -287,7 +287,7 @@ def flip_vertical(grille, player, row, column):
     i = 0
 
     #Northern check
-    while reached_limit(check_list, len(grille)) == False:
+    while reached_limit(check_list, len (+grille)) == False:
         i+= 1
         north_cell_content = grille[row - i][column]
         check_list.append(north_cell_content)
