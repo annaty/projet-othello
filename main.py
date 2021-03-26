@@ -1,6 +1,8 @@
 import math
 import os
 import functions
+from damier import Damier
+from tkinter import *
 
 while True:
     try:
@@ -12,11 +14,37 @@ while True:
     except:
         print("Veuillez entrer un nombre entier...")
 
+
+# Création du widget principal ("maître") :
+fen1 = Tk()
+
+# Création des widgets "esclaves" :
+can1 = Canvas(fen1, bg='dark grey', height=taille*37, width=taille*37)
+can1.pack(side=LEFT)
+
+# Creation du damier
+d = Damier(can1)
+bou1 = Button(fen1, text='Quitter', command=fen1.quit)
+bou1.pack(side=BOTTOM)
+
+#can1.bind("<Button-1>", d.pointeur)  # on rajoute un evenement "pointeur" quand on clique gauche
+bou2 = Button(fen1, text='Jouer', command= lambda : d.creation_grille(taille))
+bou2.pack(side=TOP)
+bou3 = Button(fen1, text='Effacer', command=d.clear)
+bou3.pack()
+
+can1.bind('<Button-1>', d.posePion)
+
+fen1.mainloop()  # démarrage du réceptionnaire d'événement
+fen1.destroy()  # destruction (fermeture) de la fenêtre
+
+
 grille = []
 for row in range(0, taille + 2):
     grille.append([])
     if row == 0:
         grille[row].append(" ")
+        
         for column in range(1, taille + 2):
             if column == taille + 1:
                 grille[row].append("_")

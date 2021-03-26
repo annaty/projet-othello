@@ -5,29 +5,29 @@ def clear_helpers(move_list, counter):
 def empty_cell_in_list(grille, row, column):
 
 
-def flip(grille, player, row, column):
-    if player == "Joueur 1":
-        player_piece = "o"
-        enemy_piece = "x"
-    elif player == "Joueur 2":
-        player_piece = "x"
-        enemy_piece = "o"
+# def flip(grille, player, row, column):
+#     if player == "Joueur 1":
+#         player_piece = "o"
+#         enemy_piece = "x"
+#     elif player == "Joueur 2":
+#         player_piece = "x"
+#         enemy_piece = "o"
 
-    check_list = []
-    i = 0
+#     check_list = []
+#     i = 0
 
-    while reached_limit(check_list, len(grille[1])) == False:
-        i += 1
-        east_cell_content = grille[row][column + i] 
-        check_list.append(east_cell_content)
+#     while reached_limit(check_list, len(grille[1])) == False:
+#         i += 1
+#         east_cell_content = grille[row][column + i] 
+#         check_list.append(east_cell_content)
 
-        if east_cell_content == player_piece and enemy_piece in check_list:
-            another_check_list = []
-            for index_transform in range(1, i):
-                another_check_list.append(grille[row][column + index_transform])
-            if '.' not in another_check_list:
-                for index_transform in range(1, i):
-                    grille [row, column + index_transform] = player_piece
+#         if east_cell_content == player_piece and enemy_piece in check_list:
+#             another_check_list = []
+#             for index_transform in range(1, i):
+#                 another_check_list.append(grille[row][column + index_transform])
+#             if '.' not in another_check_list:
+#                 for index_transform in range(1, i):
+#                     grille [row, column + index_transform] = player_piece
 
 
 
