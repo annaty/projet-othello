@@ -16,12 +16,22 @@ while True:
     except:
         print("Veuillez entrer un nombre entier...")
 
+def helloCallBack():
+    text = Text(fen0)
+    text.insert(INSERT, "Hello...")
 
 # Création du widget principal ("maître") :
+fen0 = Tk()
+fen0.title('Size input')
 fen1 = Tk()
-fen1.iconphoto(True, PhotoImage(file='icon.png'))
-# taille = IntVar()
-# taille_input = ttk.Entry(fen1, textvariable=taille)
+# fen1.iconphoto(True, PhotoImage(file='icon.png'))
+Label(fen0, text=" Quelle taille de plateau voulez-vous ? Entrez une valeur paire, d'au moins 4 : ").pack()
+input_value = IntVar()
+input_box = Entry(fen0)
+input_box.pack()
+Button(fen0, text="Click Here", command=helloCallBack())
+size_int = input_box.get()
+
 
 # Création des widgets "esclaves" :
 can1 = Canvas(fen1, bg='light steel blue', height=taille*37, width=taille*37)
@@ -39,8 +49,17 @@ bou2.pack(side=TOP)
 bou3 = Button(fen1, text='Effacer', command=d.clear)
 bou3.pack()
 
-can1.bind('<Button-1>', d.posePion)
+can1.bind('<Button-1>', d.posePion) 
 
+fen0.mainloop()
+while True:
+    try:
+        if taille >= 4 and taille % 2 == 0:
+            break
+        else:
+            print("Votre valeur n'est pas valide, entre en une autre.")
+    except:
+        print("Veuillez entrer un nombre entier...")
 fen1.mainloop()  # démarrage du réceptionnaire d'événement
 fen1.destroy()  # destruction (fermeture) de la fenêtre
 
