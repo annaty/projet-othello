@@ -3,6 +3,8 @@ import os
 import functions
 from damier import Damier
 from tkinter import *
+from tkinter import ttk
+from tkinter.ttk import *
 
 while True:
     try:
@@ -17,10 +19,14 @@ while True:
 
 # Création du widget principal ("maître") :
 fen1 = Tk()
+fen1.iconphoto(True, PhotoImage(file='icon.png'))
+# taille = IntVar()
+# taille_input = ttk.Entry(fen1, textvariable=taille)
 
 # Création des widgets "esclaves" :
-can1 = Canvas(fen1, bg='dark grey', height=taille*37, width=taille*37)
+can1 = Canvas(fen1, bg='light steel blue', height=taille*37, width=taille*37)
 can1.pack(side=LEFT)
+
 
 # Creation du damier
 d = Damier(can1)

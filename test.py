@@ -1,8 +1,27 @@
+# milieu_ligne = int(floor(len(grille)*30-10) / 2)
+# milieu_colonne = int(floor(len(grille[0])*30-10) / 2)
+
+# self.can.create_oval(milieu_ligne +2 + 15, milieu_colonne + 2 + 15, milieu_ligne + 28 + 15 , milieu_colonne + 28 + 15, fill='blue')
+# self.lesCases.remove([(milieu_ligne + 15, milieu_ligne + 30 + 15),(milieu_colonne + 15, milieu_colonne + 30 + 15), False, ""])
+# self.lesCases.append([(milieu_ligne + 15, milieu_ligne + 30 + 15),(milieu_colonne + 15, milieu_colonne + 30 + 15), True, "blue"])
+
+# self.can.create_oval(milieu_ligne +2 - 15, milieu_colonne + 2 - 15, milieu_ligne + 28 - 15 , milieu_colonne + 28 - 15, fill='blue')
+# self.lesCases.remove([(milieu_ligne - 15, milieu_ligne + 30 - 15),(milieu_colonne - 15, milieu_colonne + 30 - 15), False, ""])
+# self.lesCases.append([(milieu_ligne - 15, milieu_ligne + 30 - 15),(milieu_colonne - 15, milieu_colonne + 30 - 15), True, "blue"])
+
+# self.can.create_oval(milieu_ligne +2 + 15,  milieu_colonne + 2 - 15, milieu_ligne + 28 + 15 , milieu_colonne + 28 - 15, fill='red')
+# self.lesCases.remove([(milieu_ligne + 15, milieu_ligne + 30 + 15),(milieu_colonne - 15, milieu_colonne + 30 - 15), False, ""])
+# self.lesCases.append([(milieu_ligne + 15, milieu_ligne + 30 + 15),(milieu_colonne - 15, milieu_colonne + 30 - 15), True, "red"])
+
+# self.can.create_oval(milieu_ligne +2 - 15, milieu_colonne + 2 + 15, milieu_ligne + 28 - 15 , milieu_colonne + 28 + 15, fill='red')
+# self.lesCases.remove([(milieu_ligne - 15, milieu_ligne + 30 - 15),(milieu_colonne + 15, milieu_colonne + 30 + 15), False, ""])
+# self.lesCases.append([(milieu_ligne - 15, milieu_ligne + 30 - 15),(milieu_colonne + 15, milieu_colonne + 30 + 15), True, "red"])
+
 def clear_helpers(move_list, counter):
     move_list.clear()
     counter = 0
 
-def empty_cell_in_list(grille, row, column):
+# def empty_cell_in_list(grille, row, column):
 
 
 # def flip(grille, player, row, column):
