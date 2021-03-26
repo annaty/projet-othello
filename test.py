@@ -124,10 +124,6 @@ def empty_cell_in_list(grille, row, column):
 #         return True
 
 
-
-
-
-
 # ///////////////////////////////////////// NOS FONCTIONS RETURN /////////////////////////////////////////////////
 
 # def return_x_vertical(grille, row_j2, column_j2):
@@ -239,4 +235,3 @@ def empty_cell_in_list(grille, row, column):
 #             for index_transform in range(1, (row_j2 - pion_2_position[0])):
 #                 grille[row_j2 - index_transform][column_j2 + index_transform] = "x"
 #     check_table.clear()
-#     i = 0
