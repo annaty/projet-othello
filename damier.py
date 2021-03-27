@@ -13,9 +13,9 @@ class Damier():
 
         #end screen variables
         self.grille_size = 0
-        self.fullboard_state = BooleanVar()
+        self.fullboard_state = BooleanVar(value=False)
         self.board_state = self.fullboard_state.get()
-        self.winner = ''
+        self.winner = StringVar()
 
         #tkinter variables
         self.p1_var_int = IntVar(value=2)
@@ -133,7 +133,7 @@ class Damier():
         return not empty_case_counter >= 8
 
     def check_valid_position(self, x, y):
-        return (40 < x < (40 + 30 * 8) and 40 < y < (40 + 30 * 8))
+        return (40 < x < (40 + 30 * self.grille_size) and 40 < y < (40 + 30 * self.grille_size))
 
     def posePion(self, event):
         x = event.x
@@ -179,11 +179,11 @@ class Damier():
             self.fullboard_state.set(True)
             print(self.fullboard_state.get())
             if self.p1_var_int.get() > self.p2_var_int.get():
-                self.winner = 'p1'
+                self.winner.set(value='p1')
             elif self.p1_var_int.get() < self.p2_var_int.get():
-                self.winner = 'p2'
+                self.winner.set(value='p2')
             else:
-                self.winner = 'noone'
+                self.winner.set(value='no one')
             
 
     def clear(self):

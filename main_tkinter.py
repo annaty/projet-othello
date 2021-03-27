@@ -34,6 +34,7 @@ def board_size(master_window, size, error):
         error.config(text="Veuillez entrer un nombre entier...")
 
 def game_window(size):
+    
     # Création du widget principal ("maître") :
     fen1 = Tk()
     fen1.title('Othello')
@@ -68,35 +69,39 @@ def game_window(size):
     bou2.pack(side='bottom')
 
     #endgame condition
-    my_state = d.fullboard_state
-    my_state.trace_add('read', end_game(fen1, d))
+    def show_winner():
+        winner_var = d.winner.get()
+        Label(fen1, anchor=CENTER, textvariable=winner_var).pack()
+        return show_winner()
+    
+    # my_state = d.fullboard_state
+    d.winner.trace_add('write', show_winner)
 
     fen1.mainloop()  # démarrage du réceptionnaire d'événement
     fen1.destroy()  # destruction (fermeture) de la fenêtre
 
-def end_game(master_window, board_instance):
-    print('is the board full :', board_instance.board_state)
-    if board_instance.winner != '':
-        print('we got in')
-        master_window.destroy()
-        fen2 = Tk()
-        fen2.title('Othello - Game Over')
+def game_over(master_window, damier:Damier):
+    # winner = damier.winner.get()
+    # if winner != '':
+        # master_window.destroy()
+    print('we got in')
+        # fen2 = Tk()
+        # fen2.title('Othello - game over')
+        # if winner == 'p1': #if player1 wins
+    Label(master_window, anchor=CENTER, text="Joueur 1 a gagne").pack()
+        # elif winner == 'p2': #if player2 wins
+    Label(master_window, anchor=CENTER, text="Joueur 2 a gagne").pack()
+        # else: #draw
+    Label(master_window, anchor=CENTER, text="Un match nul").pack()
 
-        if board_instance.p1_var_int.get() > board_instance.p2_var_int.get(): #if player1 wins
-            Label(fen2, anchor=CENTER, text="Joueur 1 a gagne").pack()
-        elif board_instance.p1_var_int.get() < board_instance.p2_var_int.get(): #if player2 wins
-            Label(fen2, anchor=CENTER, text="Joueur 2 a gagne").pack()
-        else: #draw
-            Label(fen2, anchor=CENTER, text="Un match nul").pack()
+    Label(master_window, anchor=CENTER, text="Merci d'avoir joue")
+    b_replay = Button(master_window, text='Rejouer', command= start_game)
+    b_replay.pack(side='bottom')
 
-        Label(fen2, anchor=CENTER, text="Merci d'avoir joue").pack()
-        b_replay = Button(fen2, text='Rejouer', command= start_game)
-        b_replay.pack(side='bottom')
-
-        fen2.mainloop()  # démarrage du réceptionnaire d'événement
-        fen2.destroy()  # destruction (fermeture) de la fenêtre
-    else:
-        print('else works')
-
+        # fen2.mainloop()  # démarrage du réceptionnaire d'événement
+        # fen2.destroy()  # destruction (fermeture) de la fenêtre
+    # else:
+    #     print('else works')
+    # return 'string'
 
 start_game()
