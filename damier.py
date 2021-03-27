@@ -27,7 +27,7 @@ class Damier():
             x2 = x1 + 30
             if row == 0: #premier ligne
                 grille[row].append(" ")
-                # self.can.create_rectangle(x1, y1, x2, y2, outline='gray64') # top left corner
+                self.can.create_rectangle(x1, y1, x2, y2, outline='light steel blue') # top left corner
                 self.lesCases.append([(x1, x2),(y1, y2), False, ""])
                 for column in range(1, taille + 2):
                     if column == taille + 1:
@@ -94,33 +94,36 @@ class Damier():
         self.lesCases.append([(milieu - 15, milieu + 30 - 15),(milieu + 15, milieu + 30 + 15), True, 'gray24'])
 
     def check_autour(self, case_list, x1, x2, y1, y2):
-        case_counter = 0
+        empty_case_counter = 0
         for case in self.lesCases:
             if case[0] == (x1 + 30, x2 + 30) and case[1] == (y1, y2):       # Case DROITE
                 if not case[2] :
-                    case_counter += 1
+                    empty_case_counter += 1
             if case[0] == (x1 - 30, x2 - 30) and case[1] == (y1, y2):        # Case GAUCHE
                 if not case[2] :
-                    case_counter += 1
+                    empty_case_counter += 1
             if case[0] == (x1, x2) and case[1] == (y1 + 30, y2 + 30):        # Case HAUT
                 if not case[2] :
-                    case_counter += 1
+                    empty_case_counter += 1
             if case[0] == (x1, x2) and case[1] == (y1 - 30, y2 - 30):        # Case BAS 
                 if not case[2] :
-                    case_counter += 1
+                    empty_case_counter += 1
             if case[0] == (x1 + 30, x2 + 30) and case[1] == (y1 - 30 , y2 - 30):        # Case diag DROITE HAUT
                 if not case[2] :
-                    case_counter += 1
+                    empty_case_counter += 1
             if case[0] == (x1 + 30, x2 + 30) and case[1] == (y1 + 30, y2 + 30):        # Case diag DROITE BAS
                 if not case[2] :
-                    case_counter += 1
+                    empty_case_counter += 1
             if case[0] == (x1 - 30, x2 - 30) and case[1] == (y1 + 30, y2 + 30):        # Case diag GAUCHE HAUT
                 if not case[2] :
-                    case_counter += 1
+                    empty_case_counter += 1
             if case[0] == (x1 - 30, x2 - 30) and case[1] == (y1 - 30, y2 - 30):        # Case diag GAUCHE BAS
                 if not case[2] :
-                    case_counter += 1
-        return not case_counter == 8
+                    empty_case_counter += 1
+        return not empty_case_counter >= 8
+
+    def check_valid_position(self, x, y):
+        return (40 < x < (40 + 30 * 8) and 40 < y < (40 + 30 * 8))
 
     def posePion(self, event):
         x = event.x
@@ -133,7 +136,7 @@ class Damier():
 
         for case in self.lesCases:
             if ((case[0][0] < x < case[0][1]) and (case[1][0] < y < case[1][1])) and (case[2] == False):
-                if self.check_autour(self.lesCases, case[0][0], case[0][1], case[1][0], case[1][1]) == True:
+                if self.check_autour(self.lesCases, case[0][0], case[0][1], case[1][0], case[1][1]) == True and self.check_valid_position(x, y):
                     self.can.create_oval(case[0][0] + 2,case[1][0] + 2,case[0][1] - 2, case[1][1] - 2, fill=couleur, outline=couleur)
                     case_index = self.lesCases.index(case)
                     self.lesCases[case_index][2] = True
@@ -151,7 +154,7 @@ class Damier():
                     canerror = Canvas(error, bg='white', height=200, width=200)
                     canerror.pack(side=LEFT)
                     Button(error, text='Quitter', command=error.destroy).pack(padx=10, pady=10)
-                    mytext = canerror.create_text(100, 100, text="Il n'y a rien autour, veuillez choisir un autre champs")
+                    mytext = canerror.create_text(100, 100, text="Position non autorise")
                     mytext.pack()
             elif ((case[0][0] < x < case[0][1]) and (case[1][0] < y < case[1][1])) and (case[2] == True):
                 error = Toplevel()  # Popup -> Toplevel()
