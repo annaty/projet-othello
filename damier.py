@@ -10,14 +10,23 @@ class Damier():
         self.can = canevas
         self.lesCases = []
         self.move_counter = 1
+
+        #end screen variables
+        self.grille_size = 0
+        self.fullboard_state = BooleanVar()
+        self.board_state = self.fullboard_state.get()
         self.winner = ''
+
+        #tkinter variables
         self.p1_var_int = IntVar(value=2)
         self.p2_var_int = IntVar(value=2)
         self.p1_var_str = StringVar()
         self.p2_var_str = StringVar()
-
+        self.p1_var_str.set(value=self.p1_var_int.get())
+        self.p2_var_str.set(value=self.p2_var_int.get())
 
     def creation_grille(self, taille):
+        self.grille_size = taille
         grille = []
         y1 = 10
         y2 = y1 + 30
@@ -93,6 +102,7 @@ class Damier():
         self.lesCases.remove([(milieu - 15, milieu + 30 - 15),(milieu + 15, milieu + 30 + 15), False, ""])
         self.lesCases.append([(milieu - 15, milieu + 30 - 15),(milieu + 15, milieu + 30 + 15), True, 'gray24'])
 
+
     def check_autour(self, case_list, x1, x2, y1, y2):
         empty_case_counter = 0
         for case in self.lesCases:
@@ -165,6 +175,16 @@ class Damier():
                 mytext = canerror.create_text(100, 100, text="Ce champs est deja pris")
                 mytext.pack()
 
+        if (self.p1_var_int.get() + self.p2_var_int.get()) == (self.grille_size ** 2): #when the board is filled up
+            self.fullboard_state.set(True)
+            print(self.fullboard_state.get())
+            if self.p1_var_int.get() > self.p2_var_int.get():
+                self.winner = 'p1'
+            elif self.p1_var_int.get() < self.p2_var_int.get():
+                self.winner = 'p2'
+            else:
+                self.winner = 'noone'
+            
 
     def clear(self):
         "Nettoyage du canevas"
