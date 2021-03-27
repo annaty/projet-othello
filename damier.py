@@ -10,6 +10,12 @@ class Damier():
         self.can = canevas
         self.lesCases = []
         self.move_counter = 1
+        self.winner = ''
+        self.p1_var_int = IntVar(value=2)
+        self.p2_var_int = IntVar(value=2)
+        self.p1_var_str = StringVar()
+        self.p2_var_str = StringVar()
+
 
     def creation_grille(self, taille):
         grille = []
@@ -73,21 +79,19 @@ class Damier():
         
         self.can.create_oval(milieu + padd + 15, milieu + padd + 15, milieu + 28 + 15 , milieu + 28 + 15, fill='snow', outline='snow')
         self.lesCases.remove([(milieu + 15, milieu + 30 + 15),(milieu + 15, milieu + 30 + 15), False, ""])
-        self.lesCases.append([(milieu + 15, milieu + 30 + 15),(milieu + 15, milieu + 30 + 15), True, "blue"])
+        self.lesCases.append([(milieu + 15, milieu + 30 + 15),(milieu + 15, milieu + 30 + 15), True, 'snow'])
 
         self.can.create_oval(milieu + padd - 15, milieu + padd - 15, milieu + 28 - 15 , milieu + 28 - 15, fill='snow', outline='snow')
         self.lesCases.remove([(milieu - 15, milieu + 30 - 15),(milieu - 15, milieu + 30 - 15), False, ""])
-        self.lesCases.append([(milieu - 15, milieu + 30 - 15),(milieu - 15, milieu + 30 - 15), True, "blue"])
+        self.lesCases.append([(milieu - 15, milieu + 30 - 15),(milieu - 15, milieu + 30 - 15), True, 'snow'])
 
         self.can.create_oval(milieu + padd + 15,  milieu + padd - 15, milieu + 28 + 15 , milieu + 28 - 15, fill='gray24', outline='gray24')
         self.lesCases.remove([(milieu + 15, milieu + 30 + 15),(milieu - 15, milieu + 30 - 15), False, ""])
-        self.lesCases.append([(milieu + 15, milieu + 30 + 15),(milieu - 15, milieu + 30 - 15), True, "red"])
+        self.lesCases.append([(milieu + 15, milieu + 30 + 15),(milieu - 15, milieu + 30 - 15), True, 'gray24'])
 
         self.can.create_oval(milieu + padd - 15, milieu + padd + 15, milieu + 28 - 15 , milieu + 28 + 15, fill='gray24', outline='gray24')
         self.lesCases.remove([(milieu - 15, milieu + 30 - 15),(milieu + 15, milieu + 30 + 15), False, ""])
-        self.lesCases.append([(milieu - 15, milieu + 30 - 15),(milieu + 15, milieu + 30 + 15), True, "red"])
-
-
+        self.lesCases.append([(milieu - 15, milieu + 30 - 15),(milieu + 15, milieu + 30 + 15), True, 'gray24'])
 
     def check_autour(self, case_list, x1, x2, y1, y2):
         case_counter = 0
@@ -116,9 +120,7 @@ class Damier():
             if case[0] == (x1 - 30, x2 - 30) and case[1] == (y1 - 30, y2 - 30):        # Case diag GAUCHE BAS
                 if not case[2] :
                     case_counter += 1
-                
         return not case_counter == 8
-
 
     def posePion(self, event):
         x = event.x
@@ -132,9 +134,16 @@ class Damier():
         for case in self.lesCases:
             if ((case[0][0] < x < case[0][1]) and (case[1][0] < y < case[1][1])) and (case[2] == False):
                 if self.check_autour(self.lesCases, case[0][0], case[0][1], case[1][0], case[1][1]) == True:
-                    self.can.create_oval(case[0][0] + 2,case[1][0] + 2,case[0][1] - 2,case[1][1] - 2,fill=couleur, outline=couleur)
+                    self.can.create_oval(case[0][0] + 2,case[1][0] + 2,case[0][1] - 2, case[1][1] - 2, fill=couleur, outline=couleur)
                     case_index = self.lesCases.index(case)
                     self.lesCases[case_index][2] = True
+                    self.lesCases[case_index][3] = couleur
+                    if case[3] == 'snow':
+                        self.p1_var_int = IntVar(value=self.p1_var_int.get() + 1)
+                        self.p1_var_str.set(self.p1_var_int.get())
+                    elif case[3] == 'gray24':
+                        self.p2_var_int = IntVar(value=self.p2_var_int.get() + 1)
+                        self.p2_var_str.set(self.p2_var_int.get())
                     self.move_counter += 1
                 else:
                     error = Toplevel()  # Popup -> Toplevel()
