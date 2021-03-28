@@ -1,10 +1,6 @@
 import math
 import os
 import functions
-from damier import Damier
-from tkinter import *
-from tkinter import ttk
-from tkinter.ttk import *
 
 while True:
     try:
@@ -15,35 +11,6 @@ while True:
             print("Votre valeur n'est pas valide, entre en une autre.")
     except:
         print("Veuillez entrer un nombre entier...")
-
-
-# Création du widget principal ("maître") :
-fen1 = Tk()
-fen1.iconphoto(True, PhotoImage(file='icon.png'))
-# taille = IntVar()
-# taille_input = ttk.Entry(fen1, textvariable=taille)
-
-# Création des widgets "esclaves" :
-can1 = Canvas(fen1, bg='light steel blue', height=taille*37, width=taille*37)
-can1.pack(side=LEFT)
-
-
-# Creation du damier
-d = Damier(can1)
-bou1 = Button(fen1, text='Quitter', command=fen1.quit)
-bou1.pack(side=BOTTOM)
-
-#can1.bind("<Button-1>", d.pointeur)  # on rajoute un evenement "pointeur" quand on clique gauche
-bou2 = Button(fen1, text='Jouer', command= lambda : d.creation_grille(taille))
-bou2.pack(side=TOP)
-bou3 = Button(fen1, text='Effacer', command=d.clear)
-bou3.pack()
-
-can1.bind('<Button-1>', d.posePion)
-
-fen1.mainloop()  # démarrage du réceptionnaire d'événement
-fen1.destroy()  # destruction (fermeture) de la fenêtre
-
 
 grille = []
 for row in range(0, taille + 2):
@@ -77,7 +44,7 @@ grille[milieu_ligne][milieu_colonne + 1] = "o"
 grille[milieu_ligne + 1][milieu_colonne] = "o"
 
 # ///////////////// DEBUT PARTIE /////////////////////
-#functions.cls()
+functions.cls()
 functions.printGrille(grille)
 
 # Les coups des uilisatuers se lancent
