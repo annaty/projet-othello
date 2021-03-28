@@ -18,12 +18,13 @@ class Damier():
         self.winner = StringVar()
 
         #tkinter variables
-        self.p1_var_int = IntVar(value=2)
-        self.p2_var_int = IntVar(value=2)
+        self.p1_var_int = IntVar(value=0)
+        self.p2_var_int = IntVar(value=0)
         self.p1_var_str = StringVar()
         self.p2_var_str = StringVar()
         self.p1_var_str.set(value=self.p1_var_int.get())
         self.p2_var_str.set(value=self.p2_var_int.get())
+        self.current_player = StringVar(value='Blanc')
 
     def creation_grille(self, taille):
         self.grille_size = taille
@@ -132,6 +133,8 @@ class Damier():
         # self.lesCases.remove([(milieu - 15, milieu + 30 - 15),(milieu + 15, milieu + 30 + 15), False, ""])
         self.lesCases[milieu_table + 1][milieu_table] = [(milieu - 15, milieu + 30 - 15),(milieu_colonne + 15, milieu_colonne + 30 + 15), True, "gray24"]
 
+        self.p1_var_int.set(value=2)
+        self.p2_var_int.set(value=2)
 
     def check_autour(self, laLigne, laCase):
         case_counter = 0
@@ -358,8 +361,10 @@ class Damier():
             for case in ligne:
                 if self.move_counter % 2 == 0:
                     couleur = 'gray24'
+                    self.current_player.set(value='Noir')
                 elif self.move_counter % 2 == 1:
                     couleur = 'snow'    
+                    self.current_player.set(value='Blanc')
                 try:
                     if ((case[0][0] < x < case[0][1]) and (case[1][0] < y < case[1][1])) and (case[2] == False):
                         if self.flip_horizontal(self.lesCases, couleur, self.lesCases.index(ligne), ligne.index(case), "placement") == True or self.flip_vertical(self.lesCases, couleur, self.lesCases.index(ligne), ligne.index(case), "placement") == True or self.flip_diagonal(self.lesCases, couleur, self.lesCases.index(ligne), ligne.index(case), "placement") == True:
@@ -373,9 +378,8 @@ class Damier():
                                 self.flip_diagonal(self.lesCases, couleur, self.lesCases.index(ligne), ligne.index(case), "nonplacement")
                             else:
                                 showerror("Erreur", "Vous ne pouvez pas placer un pion ici, il doit y avoir au moins 1 pion sur une case adjacente.")
-                        elif self.move_counter == (self.grille_size ** 2 - 4) or self.flip_horizontal(self.lesCases, couleur, self.lesCases.index(ligne), ligne.index(case), "placement") == False or self.flip_vertical(self.lesCases, couleur, self.lesCases.index(ligne), ligne.index(case), "placement") == False or self.flip_diagonal(self.lesCases, couleur, self.lesCases.index(ligne), ligne.index(case), "placement") == False:
-                            self.move_counter += 1
-                            
+
+                        elif self.move_counter == (self.grille_size ** 2 - 4) and self.flip_horizontal(self.lesCases, couleur, self.lesCases.index(ligne), ligne.index(case), "placement") == False or self.flip_vertical(self.lesCases, couleur, self.lesCases.index(ligne), ligne.index(case), "placement") == False or self.flip_diagonal(self.lesCases, couleur, self.lesCases.index(ligne), ligne.index(case), "placement") == False:
                             self.game_over()
                     
                         else:
@@ -411,10 +415,10 @@ class Damier():
     def game_over(self):
         if self.p1_var_int.get() > self.p2_var_int.get():
             self.winner.set(value='p1')
-            showinfo("Victoire", "Congratulations player 1 !\n Pour rejouer clicker 'Effacer' et ensuite 'Jouer'")
+            showinfo("Victoire", "Congratulations Joueur 1 !\n Pour rejouer clicker 'Effacer' et ensuite 'Jouer'")
         elif self.p1_var_int.get() < self.p2_var_int.get():
             self.winner.set(value='p2')
-            showinfo("Victoire", "Congratulations player 2 !\n Pour rejouer clicker 'Effacer' et ensuite 'Jouer'")
+            showinfo("Victoire", "Congratulations Joueur 2 !\n Pour rejouer clicker 'Effacer' et ensuite 'Jouer'")
         else:
             self.winner.set(value='draw')
             showinfo("Egalité !", "Egalité !\n Pour rejouer clicker 'Effacer' et ensuite 'Jouer'")

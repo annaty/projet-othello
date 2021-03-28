@@ -2,6 +2,7 @@ from damier import Damier
 from tkinter import *
 from tkinter import ttk
 from tkinter.ttk import *
+import webbrowser
 
 def board_size(master_window, size, error):
     try:
@@ -19,7 +20,7 @@ def game_window(size):
     # Création du widget principal ("maître") :
     fen1 = Tk()
     fen1.title('Othello')
-    fen1.iconbitmap('icon.ico')
+    fen1.iconbitmap('icon3.ico')
 
     # Création des widgets "esclaves" :
     can1 = Canvas(fen1, bg='light steel blue', height=70+size*30, width=70+size*30)
@@ -32,40 +33,58 @@ def game_window(size):
     p1 = d.p1_var_str
     p2 = d.p2_var_str
     
-    p1_color = Label(fen1, anchor=CENTER, text='White: ')
-    points1 = Label(fen1, anchor=CENTER, textvariable=p1)
-    p2_color = Label(fen1, anchor=CENTER, text='Black: ')
-    points2 = Label(fen1, anchor=CENTER, textvariable=p2)
-    p1_color.pack(side='left')
-    points1.pack(side='left')
-    p2_color.pack(side='left')
-    points2.pack(side='left')
+    p1_color = Label(fen1, anchor='w', text='Blanc: ')
+    points1 = Label(fen1, anchor='w', textvariable=p1)
+    p2_color = Label(fen1, anchor='w', text='Noir: ')
+    points2 = Label(fen1, anchor='w', textvariable=p2)
+    p1_color.pack()
+    points1.pack()
+    p2_color.pack()
+    points2.pack()
+
+    current_player = d.current_player
+    turn_label = Label(fen1, anchor='w', text='le tour est au: ')
+    turn_player = Label(fen1, anchor='w', textvariable=current_player)
+    turn_label.pack()
+    turn_player.pack()
 
     #buttons
     bou1 = Button(fen1, text='Quitter', command=fen1.quit)
-    bou1.pack(side='bottom')
+    bou1.pack(side='right')
     can1.bind("<Button-1>", d.posePion)  # on rajoute un evenement "pointeur" quand on clique gauche
     bou3 = Button(fen1, text='Effacer', command=d.clear)
-    bou3.pack(side='bottom')
+    bou3.pack(side='right')
     bou2 = Button(fen1, text='Jouer', command= lambda : d.creation_grille(size))
-    bou2.pack(side='bottom')
+    bou2.pack(side='right')
 
+    def augment_counter(): 
+        d.move_counter +=1
+    bou4 = Button(fen1, text='Passer son tour', command=augment_counter) 
+    bou4.pack(side='bottom')
     fen1.mainloop()  # démarrage du réceptionnaire d'événement
-    # fen1.destroy()  # destruction (fermeture) de la fenêtre
+    fen1.destroy()  # destruction (fermeture) de la fenêtre
 
+def callback(url):
+    webbrowser.open_new(url)
 
 fen0 = Tk()
-fen0.title('Size input')
+fen0.title('Othello - saisie de la taille')
+fen0.iconbitmap('icon3.ico')
+
+welcome = Label(fen0, text=" Bienvenue ! Pour lire les regles du jeu clicker sur le bouton au dessous qui va ouvrir un lien dans votre navigateur.")
+welcome.pack(pady=10, padx=20)
+link = Label(fen0, text="Regles",borderwidth=3, relief='solid',font=('arial', 18), cursor="hand2")
+link.bind("<Button-1>", lambda e: callback("https://www.ffothello.org/othello/regles-du-jeu/"))
+link.pack(pady=10, padx=10)
 
 input_label = Label(fen0, text=" Quelle taille de plateau voulez-vous ? Entrez une valeur paire, d'au moins 4 : ")
-input_label.pack(pady=20)
+input_label.pack()
 
 input_box = Entry(fen0)
-input_box.pack(pady=10, padx=10)
+input_box.pack(pady=5,padx=10)
 
-input_submit = Button(fen0, text="Submit size", command= lambda : board_size(fen0, input_box, input_error))
+input_submit = Button(fen0, text="Entrer", command= lambda : board_size(fen0, input_box, input_error))
 input_submit.pack()
-# fen0.bind('<Return>', board_size)
 
 input_error = Label(fen0, text='')
 input_error.pack(pady=10, padx=10)
