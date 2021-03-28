@@ -197,7 +197,7 @@ class Damier():
         return False
 
 
-    def flip_horizontal(self, grille, player, row, column):
+    def flip_horizontal(self, grille, player, row, column, placement):
         #on mentionne la position du piont que l'on vient de poser
         player_piece, enemy_piece = self.color_assignment(player)
         check_list = [] # une liste qui contient le contenu de toutes les cellules dans la direction donnée, en partant de la pièce que l'on pose, jusqu'au bord
@@ -210,7 +210,10 @@ class Damier():
                 check_list.append(east_cell_content)
                 if east_cell_content == player_piece and (enemy_piece in check_list):
                     for index_transform in range(1, i + 1):
-                        grille[row][column + index_transform][3] = player_piece
+                        if placement == "placement":
+                            return True
+                        else:
+                            grille[row][column + index_transform][3] = player_piece
                 print("tour east", check_list)
         except:
             pass
@@ -226,11 +229,14 @@ class Damier():
                 check_list.append(west_cell_content)
                 if west_cell_content == player_piece and (enemy_piece in check_list):
                     for index_transform in range(1, i + 1):
-                        grille[row][column - index_transform][3] = player_piece
+                        if placement == "placement":
+                            return True
+                        else:
+                            grille[row][column - index_transform][3] = player_piece
         except:
             pass
 
-    def flip_vertical(self, grille, player, row, column):
+    def flip_vertical(self, grille, player, row, column, placement):
         player_piece, enemy_piece = self.color_assignment(player)
         check_list = []
         i = 0
@@ -243,7 +249,10 @@ class Damier():
                 check_list.append(south_cell_content)
                 if south_cell_content == player_piece and (enemy_piece in check_list) and ('.' not in check_list):
                     for index_transform in range(1, i + 1):
-                        grille[row + index_transform][column][3] = player_piece
+                        if placement == "placement":
+                            return True
+                        else:
+                            grille[row + index_transform][column][3] = player_piece
                         print("tour west", check_list)
         except:
             # print("problem south")
@@ -259,14 +268,17 @@ class Damier():
                 check_list.append(north_cell_content)
                 if north_cell_content == player_piece and (enemy_piece in check_list) and ('.' not in check_list):
                     for index_transform in range(1, i + 1):
-                        grille[row - index_transform][column][3] = player_piece
+                        if placement == "placement":
+                            return True
+                        else:
+                            grille[row - index_transform][column][3] = player_piece
                         print("tour west", check_list)
         except:
             # print("problem north")
             pass
 
 
-    def flip_diagonal(self, grille, player, row, column):
+    def flip_diagonal(self, grille, player, row, column, placement):
         player_piece, enemy_piece = self.color_assignment(player)
         check_list=[]
         i = 0
@@ -279,7 +291,10 @@ class Damier():
                 check_list.append(nw_cell_content)
                 if nw_cell_content == player_piece and (enemy_piece in check_list) and ('.' not in check_list):
                     for index_transform in range (1, i + 1):
-                        grille[row - index_transform][column - index_transform][3] = player_piece
+                        if placement == "placement":
+                            return True
+                        else:
+                            grille[row - index_transform][column - index_transform][3] = player_piece
         except:
             pass
         check_list.clear()
@@ -293,7 +308,10 @@ class Damier():
                 check_list.append(se_cell_content)
                 if se_cell_content == player_piece and (enemy_piece in check_list) and ('.' not in check_list):
                     for index_transform in range(1, i + 1):
-                        grille[row + index_transform][column + index_transform][3] = player_piece
+                        if placement == "placement":
+                            return True
+                        else:
+                            grille[row + index_transform][column + index_transform][3] = player_piece
         except:
             pass
         check_list.clear()
@@ -307,7 +325,10 @@ class Damier():
                 check_list.append(sw_cell_content)
                 if sw_cell_content== player_piece and (enemy_piece in check_list) and ('.' not in check_list):
                     for index_transform in range(1, i + 1):
-                        grille[row + index_transform][column - index_transform][3] = player_piece
+                        if placement == "placement":
+                            return True
+                        else:
+                            grille[row + index_transform][column - index_transform][3] = player_piece
         except:
             pass
         check_list.clear()
@@ -321,11 +342,12 @@ class Damier():
                 check_list.append(ne_cell_content)
                 if ne_cell_content == player_piece and (enemy_piece in check_list) and ('.' not in check_list):
                     for index_transform in range(1, i + 1):
-                        grille[row - index_transform][column + index_transform][3] = player_piece
+                        if placement == "placement":
+                            return True
+                        else:
+                            grille[row - index_transform][column + index_transform][3] = player_piece
         except:
             pass
-
-        
 
     def posePion(self, event):
         x = event.x
@@ -340,20 +362,28 @@ class Damier():
                     couleur = 'snow'    
                 try:
                     if ((case[0][0] < x < case[0][1]) and (case[1][0] < y < case[1][1])) and (case[2] == False):
-                        if self.check_autour(ligne, case) == True:
-                            self.can.create_oval(case[0][0] + 2,case[1][0] + 2,case[0][1] - 2, case[1][1] - 2, fill=couleur, outline=couleur)
+                        if self.flip_horizontal(self.lesCases, couleur, self.lesCases.index(ligne), ligne.index(case), "placement") == True or self.flip_vertical(self.lesCases, couleur, self.lesCases.index(ligne), ligne.index(case), "placement") == True or self.flip_diagonal(self.lesCases, couleur, self.lesCases.index(ligne), ligne.index(case), "placement") == True:
+                            if self.check_autour(ligne, case) == True:
+                                self.can.create_oval(case[0][0] + 2,case[1][0] + 2,case[0][1] - 2, case[1][1] - 2, fill=couleur, outline=couleur)
+                                self.move_counter += 1
+                                self.lesCases[self.lesCases.index(ligne)][ligne.index(case)] = [(case[0][0], case[0][1]), (case[1][0], case[1][1]), True, couleur]
+                                case = [(case[0][0], case[0][1]), (case[1][0], case[1][1]), True, couleur]
+                                self.flip_horizontal(self.lesCases, couleur, self.lesCases.index(ligne), ligne.index(case), "nonplacement")
+                                self.flip_vertical(self.lesCases, couleur, self.lesCases.index(ligne), ligne.index(case), "nonplacement")
+                                self.flip_diagonal(self.lesCases, couleur, self.lesCases.index(ligne), ligne.index(case), "nonplacement")
+                            else:
+                                showerror("Erreur", "Vous ne pouvez pas placer un pion ici, il doit y avoir au moins 1 pion sur une case adjacente.")
+                        elif self.move_counter == (self.grille_size ** 2 - 4) or self.flip_horizontal(self.lesCases, couleur, self.lesCases.index(ligne), ligne.index(case), "placement") == False or self.flip_vertical(self.lesCases, couleur, self.lesCases.index(ligne), ligne.index(case), "placement") == False or self.flip_diagonal(self.lesCases, couleur, self.lesCases.index(ligne), ligne.index(case), "placement") == False:
                             self.move_counter += 1
-                            self.lesCases[self.lesCases.index(ligne)][ligne.index(case)] = [(case[0][0], case[0][1]), (case[1][0], case[1][1]), True, couleur]
-                            case = [(case[0][0], case[0][1]), (case[1][0], case[1][1]), True, couleur]
-                            self.flip_horizontal(self.lesCases, couleur, self.lesCases.index(ligne), ligne.index(case))
-                            self.flip_vertical(self.lesCases, couleur, self.lesCases.index(ligne), ligne.index(case))
-                            self.flip_diagonal(self.lesCases, couleur, self.lesCases.index(ligne), ligne.index(case))
-
-
+                            
+                            self.game_over()
+                    
                         else:
-                            showerror("Erreur", "Vous ne pouvez pas placer un pion ici, il doit y avoir au moins 1 pion sur une case adjacente.")
+                            showerror("Erreur", "Vous devez obligatoirement pouvoir retourner un pion.")
+                            
                     elif ((case[0][0] < x < case[0][1]) and (case[1][0] < y < case[1][1])) and (case[2] == True):
                         showerror("Erreur", "Vous ne pouvez pas joueur sur un pion existant.")
+                    
                 except:
                     pass
 
@@ -375,18 +405,19 @@ class Damier():
                         self.p2_var_int = IntVar(value=self.p2_var_int.get() + 1)
                         self.p2_var_str.set(self.p2_var_int.get())
         
-        if (self.p1_var_int.get() + self.p2_var_int.get()) == (self.grille_size ** 2): #when the board is filled up
-            if self.p1_var_int.get() > self.p2_var_int.get():
-                self.winner.set(value='p1')
-                showinfo("Victoire", "Congratulations player 1 !\n Pour rejouer clicker 'Effacer' et ensuite 'Jouer'")
-            elif self.p1_var_int.get() < self.p2_var_int.get():
-                self.winner.set(value='p2')
-                showinfo("Victoire", "Congratulations player 2 !\n Pour rejouer clicker 'Effacer' et ensuite 'Jouer'")
-            else:
-                self.winner.set(value='draw')
-                showinfo("Egalité !\n Pour rejouer clicker 'Effacer' et ensuite 'Jouer'")
-
-
+        if (self.p1_var_int.get() + self.p2_var_int.get()) == (self.grille_size ** 2) : #when the board is filled up
+            self.game_over()
+            
+    def game_over(self):
+        if self.p1_var_int.get() > self.p2_var_int.get():
+            self.winner.set(value='p1')
+            showinfo("Victoire", "Congratulations player 1 !\n Pour rejouer clicker 'Effacer' et ensuite 'Jouer'")
+        elif self.p1_var_int.get() < self.p2_var_int.get():
+            self.winner.set(value='p2')
+            showinfo("Victoire", "Congratulations player 2 !\n Pour rejouer clicker 'Effacer' et ensuite 'Jouer'")
+        else:
+            self.winner.set(value='draw')
+            showinfo("Egalité !", "Egalité !\n Pour rejouer clicker 'Effacer' et ensuite 'Jouer'")
             
 
     def affiche(self):
