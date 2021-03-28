@@ -385,12 +385,13 @@ class Damier():
                     self.current_player.set(value='Blanc')
                 try:
                     if ((case[0][0] < x < case[0][1]) and (case[1][0] < y < case[1][1])) and (case[2] == False):
+                        
+                        
+                        # si il y a bien quelque chose autour du pion que l'on pose
+                        if self.check_autour(ligne, case) == True:
+                            # si le placement est bon (retourne obligatoirement un pion)
+                            if self.flip_horizontal(self.lesCases, self.current_color, self.lesCases.index(ligne), ligne.index(case), "placement") == True or self.flip_vertical(self.lesCases, self.current_color, self.lesCases.index(ligne), ligne.index(case), "placement") == True or self.flip_diagonal(self.lesCases, self.current_color, self.lesCases.index(ligne), ligne.index(case), "placement") == True:
 
-                        # si le placement est bon (retourne obligatoirement un pion)
-                        if self.flip_horizontal(self.lesCases, self.current_color, self.lesCases.index(ligne), ligne.index(case), "placement") == True or self.flip_vertical(self.lesCases, self.current_color, self.lesCases.index(ligne), ligne.index(case), "placement") == True or self.flip_diagonal(self.lesCases, self.current_color, self.lesCases.index(ligne), ligne.index(case), "placement") == True:
-                            
-                            # si il y a bien quelque chose autour du pion que l'on pose
-                            if self.check_autour(ligne, case) == True:
                                 # A part la pose du pion, aucune modification n'est faite sur l'interface, la donnée se change uniquement dans la liste lesCases
                                 self.countpass = 0
                                 self.can.create_oval(case[0][0] + 2,case[1][0] + 2,case[0][1] - 2, case[1][1] - 2, fill=self.current_color, outline=self.current_color)
@@ -400,17 +401,16 @@ class Damier():
                                 self.flip_horizontal(self.lesCases, self.current_color, self.lesCases.index(ligne), ligne.index(case), "nonplacement")
                                 self.flip_vertical(self.lesCases, self.current_color, self.lesCases.index(ligne), ligne.index(case), "nonplacement")
                                 self.flip_diagonal(self.lesCases, self.current_color, self.lesCases.index(ligne), ligne.index(case), "nonplacement")
+                            
                             else: # Sinon on retourne des messages d'erreur
-                                showerror("Erreur", "Vous ne pouvez pas placer un pion ici, il doit y avoir au moins 1 pion sur une case adjacente.")
-
-                        elif self.move_counter == (self.grille_size ** 2 - 4) and self.flip_horizontal(self.lesCases, self.current_color, self.lesCases.index(ligne), ligne.index(case), "placement") == False or self.flip_vertical(self.lesCases, self.current_color, self.lesCases.index(ligne), ligne.index(case), "placement") == False or self.flip_diagonal(self.lesCases, self.current_color, self.lesCases.index(ligne), ligne.index(case), "placement") == False:
-                            self.game_over()
-                    
+                                showerror("Erreur", "Vous devez obligatoirement pouvoir retourner un pion.")
+                        
                         else:
-                            showerror("Erreur", "Vous devez obligatoirement pouvoir retourner un pion.")
+                            showerror("Erreur", "Vous ne pouvez pas placer un pion ici, il doit y avoir au moins 1 pion sur une case adjacente.")
+
                             
                     elif ((case[0][0] < x < case[0][1]) and (case[1][0] < y < case[1][1])) and (case[2] == True):
-                        showerror("Erreur", "Vous ne pouvez pas joueur sur un pion existant.")
+                        showerror("Erreur", "Vous ne pouvez pas jouer sur un pion existant.")
                     
                 except:
                     pass
