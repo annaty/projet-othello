@@ -15,7 +15,7 @@ class Damier():
         self.grille_size = 0
         self.fullboard_state = BooleanVar()
         self.board_state = self.fullboard_state.get()
-        self.winner = ''
+        self.winner = StringVar()
 
         #tkinter variables
         self.p1_var_int = IntVar(value=2)
@@ -376,27 +376,15 @@ class Damier():
                         self.p2_var_str.set(self.p2_var_int.get())
         
         if (self.p1_var_int.get() + self.p2_var_int.get()) == (self.grille_size ** 2): #when the board is filled up
-            import main_tkinter
-            self.fullboard_state.set(True)
-            print(self.fullboard_state.get())
-            win_window = Toplevel()
             if self.p1_var_int.get() > self.p2_var_int.get():
-                self.winner = 'p1'
-                  # Popup -> Toplevel()
-                win_window.title('win1')
-                Button(win_window, text='Rejouer', command=main_tkinter.start_game).pack(padx=10, pady=10)
+                self.winner.set(value='p1')
+                showinfo("Victoire", "Congratulations player 1 !\n Pour rejouer clicker 'Effacer' et ensuite 'Jouer'")
             elif self.p1_var_int.get() < self.p2_var_int.get():
-                self.winner = 'p2'
-                # window = Toplevel()  # Popup -> Toplevel()
-                win_window.title('win2')
-                Button(win_window, text='Rejouer', command=main_tkinter.start_game).pack(padx=10, pady=10)
-
+                self.winner.set(value='p2')
+                showinfo("Victoire", "Congratulations player 2 !\n Pour rejouer clicker 'Effacer' et ensuite 'Jouer'")
             else:
-                self.winner = 'noone'
-                # window = Toplevel()  # Popup -> Toplevel()
-                win_window.title('draw')
-
-                Button(win_window, text='Rejouer', command=main_tkinter.start_game).pack(padx=10, pady=10)
+                self.winner.set(value='draw')
+                showinfo("Egalité !\n Pour rejouer clicker 'Effacer' et ensuite 'Jouer'")
 
 
             

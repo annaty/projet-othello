@@ -3,25 +3,6 @@ from tkinter import *
 from tkinter import ttk
 from tkinter.ttk import *
 
-def start_game():
-    fen0 = Tk()
-    fen0.title('Size input')
-
-    input_label = Label(fen0, text=" Quelle taille de plateau voulez-vous ? Entrez une valeur paire, d'au moins 4 : ")
-    input_label.pack(pady=20)
-
-    input_box = Entry(fen0)
-    input_box.pack(pady=10, padx=10)
-
-    input_submit = Button(fen0, text="Submit size", command= lambda : board_size(fen0, input_box, input_error))
-    input_submit.pack()
-    # fen0.bind('<Return>', board_size)
-
-    input_error = Label(fen0, text='')
-    input_error.pack(pady=10, padx=10)
-
-    fen0.mainloop()
-
 def board_size(master_window, size, error):
     try:
         size_input = int(size.get())
@@ -38,7 +19,8 @@ def game_window(size):
     # Création du widget principal ("maître") :
     fen1 = Tk()
     fen1.title('Othello')
-    # fen1.iconphoto(True, PhotoImage(file='icon.png'))
+    fen1.iconbitmap('icon.ico')
+
     # Création des widgets "esclaves" :
     can1 = Canvas(fen1, bg='light steel blue', height=70+size*30, width=70+size*30)
     can1.pack(anchor='center')
@@ -68,40 +50,24 @@ def game_window(size):
     bou2 = Button(fen1, text='Jouer', command= lambda : d.creation_grille(size))
     bou2.pack(side='bottom')
 
-    #endgame condition
-    # def show_winner():
-    #     winner_var = d.winner.get()
-    #     Label(fen1, anchor=CENTER, textvariable=winner_var).pack()
-    #     return show_winner()
-    
-    # # my_state = d.fullboard_state
-    # d.winner.trace_add('write', show_winner)
-
     fen1.mainloop()  # démarrage du réceptionnaire d'événement
-    fen1.destroy()  # destruction (fermeture) de la fenêtre
+    # fen1.destroy()  # destruction (fermeture) de la fenêtre
 
-# def game_over(master_window, damier:Damier):
-#     # winner = damier.winner.get()
-#     # if winner != '':
-#         # master_window.destroy()
-#     print('we got in')
-#         # fen2 = Tk()
-#         # fen2.title('Othello - game over')
-#         # if winner == 'p1': #if player1 wins
-#     Label(master_window, anchor=CENTER, text="Joueur 1 a gagne").pack()
-#         # elif winner == 'p2': #if player2 wins
-#     Label(master_window, anchor=CENTER, text="Joueur 2 a gagne").pack()
-#         # else: #draw
-#     Label(master_window, anchor=CENTER, text="Un match nul").pack()
 
-#     Label(master_window, anchor=CENTER, text="Merci d'avoir joue")
-#     b_replay = Button(master_window, text='Rejouer', command= start_game)
-#     b_replay.pack(side='bottom')
+fen0 = Tk()
+fen0.title('Size input')
 
-#         # fen2.mainloop()  # démarrage du réceptionnaire d'événement
-#         # fen2.destroy()  # destruction (fermeture) de la fenêtre
-#     # else:
-#     #     print('else works')
-#     # return 'string'
+input_label = Label(fen0, text=" Quelle taille de plateau voulez-vous ? Entrez une valeur paire, d'au moins 4 : ")
+input_label.pack(pady=20)
 
-start_game()
+input_box = Entry(fen0)
+input_box.pack(pady=10, padx=10)
+
+input_submit = Button(fen0, text="Submit size", command= lambda : board_size(fen0, input_box, input_error))
+input_submit.pack()
+# fen0.bind('<Return>', board_size)
+
+input_error = Label(fen0, text='')
+input_error.pack(pady=10, padx=10)
+
+fen0.mainloop()
