@@ -254,4 +254,3 @@ def clear_helpers(move_list, counter):
 #             for index_transform in range(1, (row_j2 - pion_2_position[0])):
 #                 grille[row_j2 - index_transform][column_j2 + index_transform] = "x"
 #     check_table.clear()
-#     i = 0
