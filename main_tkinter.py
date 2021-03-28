@@ -56,15 +56,20 @@ def game_window(size):
     bou3.pack(side='right')
     bou2 = Button(fen1, text='Jouer', command= lambda : d.creation_grille(size))
     bou2.pack(side='right')
+    d.countpass = 0
 
     def skip_turn(): 
-        d.move_counter +=1
-        if d.current_color == 'snow':
-            d.current_player.set(value='Noir')
-        elif d.current_color == 'gray24':
-            d.current_player.set(value='Blanc')
+        if d.countpass == 1:
+            d.game_over()
         else:
-            pass
+            d.move_counter +=1
+            d.countpass += 1
+            if d.current_color == 'snow':
+                d.current_player.set(value='Noir')
+            elif d.current_color == 'gray24':
+                d.current_player.set(value='Blanc')
+            else:
+                pass
 
     bou4 = Button(fen1, text='Passer son tour', command=skip_turn) 
     bou4.pack(side='bottom')

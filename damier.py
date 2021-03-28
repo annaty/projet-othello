@@ -11,6 +11,7 @@ class Damier():
         self.lesCases = []
         self.move_counter = 1
         self.current_color = ''
+        self.countpass = 0
 
         #end screen variables
         self.grille_size = 0
@@ -371,6 +372,7 @@ class Damier():
                     if ((case[0][0] < x < case[0][1]) and (case[1][0] < y < case[1][1])) and (case[2] == False):
                         if self.flip_horizontal(self.lesCases, self.current_color, self.lesCases.index(ligne), ligne.index(case), "placement") == True or self.flip_vertical(self.lesCases, self.current_color, self.lesCases.index(ligne), ligne.index(case), "placement") == True or self.flip_diagonal(self.lesCases, self.current_color, self.lesCases.index(ligne), ligne.index(case), "placement") == True:
                             if self.check_autour(ligne, case) == True:
+                                self.countpass = 0
                                 self.can.create_oval(case[0][0] + 2,case[1][0] + 2,case[0][1] - 2, case[1][1] - 2, fill=self.current_color, outline=self.current_color)
                                 self.move_counter += 1
                                 self.lesCases[self.lesCases.index(ligne)][ligne.index(case)] = [(case[0][0], case[0][1]), (case[1][0], case[1][1]), True, self.current_color]
