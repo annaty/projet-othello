@@ -5,7 +5,6 @@ from tkinter import *
 from tkinter import ttk
 from tkinter.ttk import *
 from tkinter.messagebox import *
-
 class Damier():
     def __init__(self, canevas):
         self.can = canevas
@@ -363,9 +362,6 @@ class Damier():
                     if isinstance(case, list) == True:
                         if case[2] == True:
                             self.can.create_oval(case[0][0] + 2,case[1][0] + 2,case[0][1] - 2, case[1][1] - 2, fill=case[3], outline=case[3])
-
-        
-
         
         self.p1_var_int = IntVar(value=0)
         self.p2_var_int = IntVar(value=0)
@@ -380,17 +376,29 @@ class Damier():
                         self.p2_var_str.set(self.p2_var_int.get())
         
         if (self.p1_var_int.get() + self.p2_var_int.get()) == (self.grille_size ** 2): #when the board is filled up
+            import main_tkinter
             self.fullboard_state.set(True)
             print(self.fullboard_state.get())
+            win_window = Toplevel()
             if self.p1_var_int.get() > self.p2_var_int.get():
                 self.winner = 'p1'
-                showinfo("Victoire", "Congratulations player 1 !")
+                  # Popup -> Toplevel()
+                win_window.title('win1')
+                Button(win_window, text='Rejouer', command=main_tkinter.start_game).pack(padx=10, pady=10)
             elif self.p1_var_int.get() < self.p2_var_int.get():
                 self.winner = 'p2'
-                showinfo("Victoire", "Congratulations player 2 !")
+                # window = Toplevel()  # Popup -> Toplevel()
+                win_window.title('win2')
+                Button(win_window, text='Rejouer', command=main_tkinter.start_game).pack(padx=10, pady=10)
+
             else:
                 self.winner = 'noone'
-                showinfo("Egalité !")
+                # window = Toplevel()  # Popup -> Toplevel()
+                win_window.title('draw')
+
+                Button(win_window, text='Rejouer', command=main_tkinter.start_game).pack(padx=10, pady=10)
+
+
             
 
     def affiche(self):
@@ -404,4 +412,6 @@ class Damier():
         "Nettoyage du canevas"
         self.can.delete("all")
         self.lesCases.clear()
+        self.p1_var_int.set(value=2)
+        self.p2_var_int.set(value=2)
 
