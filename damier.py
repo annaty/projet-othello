@@ -10,6 +10,7 @@ class Damier():
         self.can = canevas
         self.lesCases = []
         self.move_counter = 1
+        self.current_color = ''
 
         #end screen variables
         self.grille_size = 0
@@ -24,9 +25,10 @@ class Damier():
         self.p2_var_str = StringVar()
         self.p1_var_str.set(value=self.p1_var_int.get())
         self.p2_var_str.set(value=self.p2_var_int.get())
-        self.current_player = StringVar(value='Blanc')
+        self.current_player = StringVar(value='')
 
     def creation_grille(self, taille):
+        self.current_player.set(value='Blanc')
         self.grille_size = taille
         grille = []
         y1 = 10
@@ -360,26 +362,26 @@ class Damier():
         for ligne in self.lesCases:
             for case in ligne:
                 if self.move_counter % 2 == 0:
-                    couleur = 'gray24'
+                    self.current_color = 'gray24'
                     self.current_player.set(value='Noir')
                 elif self.move_counter % 2 == 1:
-                    couleur = 'snow'    
+                    self.current_color = 'snow'    
                     self.current_player.set(value='Blanc')
                 try:
                     if ((case[0][0] < x < case[0][1]) and (case[1][0] < y < case[1][1])) and (case[2] == False):
-                        if self.flip_horizontal(self.lesCases, couleur, self.lesCases.index(ligne), ligne.index(case), "placement") == True or self.flip_vertical(self.lesCases, couleur, self.lesCases.index(ligne), ligne.index(case), "placement") == True or self.flip_diagonal(self.lesCases, couleur, self.lesCases.index(ligne), ligne.index(case), "placement") == True:
+                        if self.flip_horizontal(self.lesCases, self.current_color, self.lesCases.index(ligne), ligne.index(case), "placement") == True or self.flip_vertical(self.lesCases, self.current_color, self.lesCases.index(ligne), ligne.index(case), "placement") == True or self.flip_diagonal(self.lesCases, self.current_color, self.lesCases.index(ligne), ligne.index(case), "placement") == True:
                             if self.check_autour(ligne, case) == True:
-                                self.can.create_oval(case[0][0] + 2,case[1][0] + 2,case[0][1] - 2, case[1][1] - 2, fill=couleur, outline=couleur)
+                                self.can.create_oval(case[0][0] + 2,case[1][0] + 2,case[0][1] - 2, case[1][1] - 2, fill=self.current_color, outline=self.current_color)
                                 self.move_counter += 1
-                                self.lesCases[self.lesCases.index(ligne)][ligne.index(case)] = [(case[0][0], case[0][1]), (case[1][0], case[1][1]), True, couleur]
-                                case = [(case[0][0], case[0][1]), (case[1][0], case[1][1]), True, couleur]
-                                self.flip_horizontal(self.lesCases, couleur, self.lesCases.index(ligne), ligne.index(case), "nonplacement")
-                                self.flip_vertical(self.lesCases, couleur, self.lesCases.index(ligne), ligne.index(case), "nonplacement")
-                                self.flip_diagonal(self.lesCases, couleur, self.lesCases.index(ligne), ligne.index(case), "nonplacement")
+                                self.lesCases[self.lesCases.index(ligne)][ligne.index(case)] = [(case[0][0], case[0][1]), (case[1][0], case[1][1]), True, self.current_color]
+                                case = [(case[0][0], case[0][1]), (case[1][0], case[1][1]), True, self.current_color]
+                                self.flip_horizontal(self.lesCases, self.current_color, self.lesCases.index(ligne), ligne.index(case), "nonplacement")
+                                self.flip_vertical(self.lesCases, self.current_color, self.lesCases.index(ligne), ligne.index(case), "nonplacement")
+                                self.flip_diagonal(self.lesCases, self.current_color, self.lesCases.index(ligne), ligne.index(case), "nonplacement")
                             else:
                                 showerror("Erreur", "Vous ne pouvez pas placer un pion ici, il doit y avoir au moins 1 pion sur une case adjacente.")
 
-                        elif self.move_counter == (self.grille_size ** 2 - 4) and self.flip_horizontal(self.lesCases, couleur, self.lesCases.index(ligne), ligne.index(case), "placement") == False or self.flip_vertical(self.lesCases, couleur, self.lesCases.index(ligne), ligne.index(case), "placement") == False or self.flip_diagonal(self.lesCases, couleur, self.lesCases.index(ligne), ligne.index(case), "placement") == False:
+                        elif self.move_counter == (self.grille_size ** 2 - 4) and self.flip_horizontal(self.lesCases, self.current_color, self.lesCases.index(ligne), ligne.index(case), "placement") == False or self.flip_vertical(self.lesCases, self.current_color, self.lesCases.index(ligne), ligne.index(case), "placement") == False or self.flip_diagonal(self.lesCases, self.current_color, self.lesCases.index(ligne), ligne.index(case), "placement") == False:
                             self.game_over()
                     
                         else:

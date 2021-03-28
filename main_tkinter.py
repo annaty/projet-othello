@@ -57,10 +57,18 @@ def game_window(size):
     bou2 = Button(fen1, text='Jouer', command= lambda : d.creation_grille(size))
     bou2.pack(side='right')
 
-    def augment_counter(): 
+    def skip_turn(): 
         d.move_counter +=1
-    bou4 = Button(fen1, text='Passer son tour', command=augment_counter) 
+        if d.current_color == 'snow':
+            d.current_player.set(value='Noir')
+        elif d.current_color == 'gray24':
+            d.current_player.set(value='Blanc')
+        else:
+            pass
+
+    bou4 = Button(fen1, text='Passer son tour', command=skip_turn) 
     bou4.pack(side='bottom')
+
     fen1.mainloop()  # démarrage du réceptionnaire d'événement
     fen1.destroy()  # destruction (fermeture) de la fenêtre
 
@@ -71,9 +79,9 @@ fen0 = Tk()
 fen0.title('Othello - saisie de la taille')
 fen0.iconbitmap('icon3.ico')
 
-welcome = Label(fen0, text=" Bienvenue ! Pour lire les regles du jeu clicker sur le bouton au dessous qui va ouvrir un lien dans votre navigateur.")
+welcome = Label(fen0, text=" Bienvenue ! Pour lire les règles du jeu clickez sur le bouton au dessous, qui va ouvrir un lien dans votre navigateur.")
 welcome.pack(pady=10, padx=20)
-link = Label(fen0, text="Regles",borderwidth=3, relief='solid',font=('arial', 18), cursor="hand2")
+link = Label(fen0, text="Règles",borderwidth=3, relief='solid',font=('arial', 18), cursor="hand2")
 link.bind("<Button-1>", lambda e: callback("https://www.ffothello.org/othello/regles-du-jeu/"))
 link.pack(pady=10, padx=10)
 
