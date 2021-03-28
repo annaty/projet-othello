@@ -1,6 +1,4 @@
 from math import *
-# o --> bleu
-# x --> rouge
 from tkinter import *
 from tkinter import ttk
 from tkinter.ttk import *
@@ -8,7 +6,7 @@ from tkinter.messagebox import *
 class Damier():
     def __init__(self, canevas):
         self.can = canevas
-        self.lesCases = []
+        self.lesCases = [] # La liste qui va comporter toutes les cases avec leurs attributs
         self.move_counter = 1
         self.current_color = ''
         self.countpass = 0
@@ -28,8 +26,10 @@ class Damier():
         self.p2_var_str.set(value=self.p2_var_int.get())
         self.current_player = StringVar(value='')
 
+    # Fonction qui construit la grille, elle est appelée quand on clique sur "Jouer"
     def creation_grille(self, taille):
         self.current_player.set(value='Blanc')
+        self.move_counter = 1
         self.grille_size = taille
         grille = []
         y1 = 10
@@ -39,6 +39,7 @@ class Damier():
             x2 = x1 + 30
             self.lesCases.append([])
             if ligne == taille + 1:
+            # C'est la toute dernière ligne, elle n'apparait pas dans la fenetre, elle sert de limite
                 for colonne in range(0,taille):
                     self.lesCases[ligne].append("_")
             elif ligne == 0:
@@ -50,6 +51,7 @@ class Damier():
             else :
                 for colonne in range(0 ,taille + 2):
                     if colonne == taille + 1:
+                        # C'est la toute dernière colonne, elle n'apparait pas dans la fenetre, elle sert de limite
                         self.lesCases[ligne].append("_")
                     elif colonne == 0:
                         self.lesCases[ligne].append(ligne)
@@ -112,8 +114,12 @@ class Damier():
                     
             y1 += 30
             y2 += 30
+            self.p1_var_int.set(2)
+            self.p1_var_str.set(2)
+            self.p2_var_int.set(2)
+            self.p2_var_str.set(2)
             
-        #=============   position de depart   =======================
+        #=============   positions de depart   =======================
         milieu = int(floor(len(grille)*30-10) / 2)
         milieu_colonne = int(floor(len(grille[0])*30-10) / 2)
 
@@ -136,15 +142,18 @@ class Damier():
         # self.lesCases.remove([(milieu - 15, milieu + 30 - 15),(milieu + 15, milieu + 30 + 15), False, ""])
         self.lesCases[milieu_table + 1][milieu_table] = [(milieu - 15, milieu + 30 - 15),(milieu_colonne + 15, milieu_colonne + 30 + 15), True, "gray24"]
 
-        self.p1_var_int.set(value=2)
-        self.p2_var_int.set(value=2)
+        # On initialise donc le core de chaque joueur à 2 du fait des pions de départ
+        self.p1_var_int = IntVar(value=2)
+        self.p2_var_int = IntVar(value=2)
 
+    # Fonction qui vérifié si le pion posé est entourré ou non
     def check_autour(self, laLigne, laCase):
+        # laLigne et laCase correspondent à l'emplacement du pion posé dans la liste lesCases
         case_counter = 0
         try :
             if self.lesCases[self.lesCases.index(laLigne)][laLigne.index(laCase) + 1][2] == False:       # Case DROITE
                 case_counter += 1
-        except:
+        except: # dans le cas où l'on est sur un bord, le try plus haut ne peut pas se faire, on passe alors dans le except
             case_counter += 1
         try:
             if self.lesCases[self.lesCases.index(laLigne)][laLigne.index(laCase) - 1][2] == False:        # Case GAUCHE
@@ -183,16 +192,21 @@ class Damier():
             case_counter +=1        
                 
         return not case_counter == 8
+        # S'il n'y a rien autour du pion posé, la fonction retourne False
+        # Dans le cas inverse, c'est True
+
 
     def check_valid_position(self, x, y):
         return (40 < x < (40 + 30 * 8) and 40 < y < (40 + 30 * 8))
     
+    # Assigne se couleur au joueur et à son adversaire
     def color_assignment(self, pion_joue):
         if pion_joue == "snow": #Joueur 1
             return 'snow', 'gray24'
         elif pion_joue == "gray24": #Joueur 2
             return 'gray24', 'snow'
     
+    #On fait appel à cette fonction dans tous les flips, elle vérifie si on a atteint la limite et ainsi retourner les pions
     def reached_limit(self, liste_champs, length_matrix):
         if "|" in liste_champs or "_" in liste_champs or " " in liste_champs:
             return True
@@ -203,24 +217,28 @@ class Damier():
         return False
 
 
+    # Toutes les fonctions flip fonctionnent de la même manière, c'est juste le sens de vérification qui change
     def flip_horizontal(self, grille, player, row, column, placement):
         #on mentionne la position du piont que l'on vient de poser
         player_piece, enemy_piece = self.color_assignment(player)
-        check_list = [] # une liste qui contient le contenu de toutes les cellules dans la direction donnée, en partant de la pièce que l'on pose, jusqu'au bord
+        check_list = [] # une liste qui contient le contenu de toutes les cellules dans la direction donnée
         i = 0 # une variable utilisée pour suivre le nombre d'itérations de la boucle
+
         #Eastern check
         try:
+            # tant que notre limite n'est pas atteinte, on rentre dans cette boucle
             while self.reached_limit(check_list, len(grille)) == False:
                 i+= 1
-                east_cell_content = grille[row][column + i][3]
+                east_cell_content = grille[row][column + i][3] # la couleur du pion de droite, la distance avec le pion posé dépend donc de i
                 check_list.append(east_cell_content)
                 if east_cell_content == player_piece and (enemy_piece in check_list):
+                    # east_cell_content == player_piece est notre limite, c'est lorsqu'on atteint un autre de ses pions, on peut alors retourner
                     for index_transform in range(1, i + 1):
-                        if placement == "placement":
+                        if placement == "placement": # Nous sert lorsque que l'on peut savoir s'il est posible de poser un pion ou non
+                            # On utilise la fonction flip_horizontal pour la verification mais nous ne voulons pas retourner de pions
                             return True
                         else:
                             grille[row][column + index_transform][3] = player_piece
-                print("tour east", check_list)
         except:
             pass
             
@@ -259,9 +277,7 @@ class Damier():
                             return True
                         else:
                             grille[row + index_transform][column][3] = player_piece
-                        print("tour west", check_list)
         except:
-            # print("problem south")
             pass
         check_list.clear()
         i = 0
@@ -278,9 +294,7 @@ class Damier():
                             return True
                         else:
                             grille[row - index_transform][column][3] = player_piece
-                        print("tour west", check_list)
         except:
-            # print("problem north")
             pass
 
 
@@ -358,10 +372,11 @@ class Damier():
     def posePion(self, event):
         x = event.x
         y = event.y
-        print(self.grille_size)
 
+        # A chaque fois qu'on pose un pion on va devoir parcourir toutes les cases du plateau
         for ligne in self.lesCases:
             for case in ligne:
+                # On définit la couleur du joueur
                 if self.move_counter % 2 == 0:
                     self.current_color = 'gray24'
                     self.current_player.set(value='Noir')
@@ -370,8 +385,13 @@ class Damier():
                     self.current_player.set(value='Blanc')
                 try:
                     if ((case[0][0] < x < case[0][1]) and (case[1][0] < y < case[1][1])) and (case[2] == False):
+
+                        # si le placement est bon (retourne obligatoirement un pion)
                         if self.flip_horizontal(self.lesCases, self.current_color, self.lesCases.index(ligne), ligne.index(case), "placement") == True or self.flip_vertical(self.lesCases, self.current_color, self.lesCases.index(ligne), ligne.index(case), "placement") == True or self.flip_diagonal(self.lesCases, self.current_color, self.lesCases.index(ligne), ligne.index(case), "placement") == True:
+                            
+                            # si il y a bien quelque chose autour du pion que l'on pose
                             if self.check_autour(ligne, case) == True:
+                                # A part la pose du pion, aucune modification n'est faite sur l'interface, la donnée se change uniquement dans la liste lesCases
                                 self.countpass = 0
                                 self.can.create_oval(case[0][0] + 2,case[1][0] + 2,case[0][1] - 2, case[1][1] - 2, fill=self.current_color, outline=self.current_color)
                                 self.move_counter += 1
@@ -380,7 +400,7 @@ class Damier():
                                 self.flip_horizontal(self.lesCases, self.current_color, self.lesCases.index(ligne), ligne.index(case), "nonplacement")
                                 self.flip_vertical(self.lesCases, self.current_color, self.lesCases.index(ligne), ligne.index(case), "nonplacement")
                                 self.flip_diagonal(self.lesCases, self.current_color, self.lesCases.index(ligne), ligne.index(case), "nonplacement")
-                            else:
+                            else: # Sinon on retourne des messages d'erreur
                                 showerror("Erreur", "Vous ne pouvez pas placer un pion ici, il doit y avoir au moins 1 pion sur une case adjacente.")
 
                         elif self.move_counter == (self.grille_size ** 2 - 4) and self.flip_horizontal(self.lesCases, self.current_color, self.lesCases.index(ligne), ligne.index(case), "placement") == False or self.flip_vertical(self.lesCases, self.current_color, self.lesCases.index(ligne), ligne.index(case), "placement") == False or self.flip_diagonal(self.lesCases, self.current_color, self.lesCases.index(ligne), ligne.index(case), "placement") == False:
@@ -394,51 +414,42 @@ class Damier():
                     
                 except:
                     pass
-
-            for ligne in self.lesCases:
-                for case in ligne:
-                    if isinstance(case, list) == True:
-                        if case[2] == True:
-                            self.can.create_oval(case[0][0] + 2,case[1][0] + 2,case[0][1] - 2, case[1][1] - 2, fill=case[3], outline=case[3])
-        
+            
+        # On examine les données que l'on a à présent dans lesCases et on modifie l'interface en fonction
         self.p1_var_int = IntVar(value=0)
         self.p2_var_int = IntVar(value=0)
         for ligne in self.lesCases:
             for case in ligne:
                 if isinstance(case, list) == True:
+                    if case[2] == True:
+                        self.can.create_oval(case[0][0] + 2,case[1][0] + 2,case[0][1] - 2, case[1][1] - 2, fill=case[3], outline=case[3])
                     if case[3] == 'snow':
                         self.p1_var_int = IntVar(value=self.p1_var_int.get() + 1)
                         self.p1_var_str.set(self.p1_var_int.get())
                     elif case[3] == 'gray24':
                         self.p2_var_int = IntVar(value=self.p2_var_int.get() + 1)
                         self.p2_var_str.set(self.p2_var_int.get())
-        
-        if (self.p1_var_int.get() + self.p2_var_int.get()) == (self.grille_size ** 2) : #when the board is filled up
+
+        # Si la grille est pleine, on affiche le gagnant
+        if (self.p1_var_int.get() + self.p2_var_int.get()) == (self.grille_size ** 2) :
             self.game_over()
             
+    # Fonction qui affiche le gagnant        
     def game_over(self):
         if self.p1_var_int.get() > self.p2_var_int.get():
             self.winner.set(value='p1')
-            showinfo("Victoire", "Congratulations Joueur 1 !\n Pour rejouer clicker 'Effacer' et ensuite 'Jouer'")
+            showinfo("Victoire", "Félicitations Joueur 1 !\n\nPour rejouer clicker 'Effacer' et ensuite 'Jouer'")
         elif self.p1_var_int.get() < self.p2_var_int.get():
             self.winner.set(value='p2')
-            showinfo("Victoire", "Congratulations Joueur 2 !\n Pour rejouer clicker 'Effacer' et ensuite 'Jouer'")
+            showinfo("Victoire", "Félicitations Joueur 2 !\n\nPour rejouer clicker 'Effacer' et ensuite 'Jouer'")
         else:
             self.winner.set(value='draw')
-            showinfo("Egalité !", "Egalité !\n Pour rejouer clicker 'Effacer' et ensuite 'Jouer'")
+            showinfo("Egalité !", "Egalité !\n Pour rejouer clickez 'Effacer' et ensuite 'Jouer'")
             
-
-    def affiche(self):
-        for element in self.lesCases:
-            for truc in element:
-                print(truc)
-            print()
-
-
+    # Lorsque l'on clique sur "Effacer", nous effaçons tout le canevas et raprtons de zéro
+    # C'est cette fonction qui efface tout
     def clear(self):
         "Nettoyage du canevas"
         self.can.delete("all")
         self.lesCases.clear()
-        self.p1_var_int.set(value=2)
-        self.p2_var_int.set(value=2)
 
