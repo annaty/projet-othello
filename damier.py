@@ -231,14 +231,15 @@ class Damier():
                 i+= 1
                 east_cell_content = grille[row][column + i][3] # la couleur du pion de droite, la distance avec le pion posé dépend donc de i
                 check_list.append(east_cell_content)
-                if east_cell_content == player_piece and (enemy_piece in check_list):
+                if east_cell_content == player_piece and (enemy_piece in check_list) and check_list[0] != player_piece:
                     # east_cell_content == player_piece est notre limite, c'est lorsqu'on atteint un autre de ses pions, on peut alors retourner
-                    for index_transform in range(1, i + 1):
+                    for index_transform in range(1, i):
                         if placement == "placement": # Nous sert lorsque que l'on peut savoir s'il est posible de poser un pion ou non
                             # On utilise la fonction flip_horizontal pour la verification mais nous ne voulons pas retourner de pions
                             return True
                         else:
                             grille[row][column + index_transform][3] = player_piece
+                    check_list[-1] = " "
         except:
             pass
             
@@ -251,12 +252,13 @@ class Damier():
                 i+= 1
                 west_cell_content = grille[row][column - i][3]
                 check_list.append(west_cell_content)
-                if west_cell_content == player_piece and (enemy_piece in check_list):
-                    for index_transform in range(1, i + 1):
+                if west_cell_content == player_piece and (enemy_piece in check_list) and check_list[0] != player_piece:
+                    for index_transform in range(1, i):
                         if placement == "placement":
                             return True
                         else:
                             grille[row][column - index_transform][3] = player_piece
+                    check_list[-1] = " "
         except:
             pass
 
@@ -271,12 +273,13 @@ class Damier():
                 i+= 1
                 south_cell_content = grille[row + i][column][3]
                 check_list.append(south_cell_content)
-                if south_cell_content == player_piece and (enemy_piece in check_list) and ('.' not in check_list):
-                    for index_transform in range(1, i + 1):
+                if south_cell_content == player_piece and (enemy_piece in check_list) and check_list[0] != player_piece:
+                    for index_transform in range(1, i):
                         if placement == "placement":
                             return True
                         else:
                             grille[row + index_transform][column][3] = player_piece
+                    check_list[-1] = " "
         except:
             pass
         check_list.clear()
@@ -288,12 +291,13 @@ class Damier():
                 i+= 1
                 north_cell_content = grille[row - i][column][3]
                 check_list.append(north_cell_content)
-                if north_cell_content == player_piece and (enemy_piece in check_list) and ('.' not in check_list):
-                    for index_transform in range(1, i + 1):
+                if north_cell_content == player_piece and (enemy_piece in check_list) and check_list[0] != player_piece:
+                    for index_transform in range(1, i):
                         if placement == "placement":
                             return True
                         else:
                             grille[row - index_transform][column][3] = player_piece
+                    check_list[-1] = " "
         except:
             pass
 
@@ -309,12 +313,13 @@ class Damier():
                 i += 1
                 nw_cell_content = grille[row - i][column - i][3]
                 check_list.append(nw_cell_content)
-                if nw_cell_content == player_piece and (enemy_piece in check_list) and ('.' not in check_list):
-                    for index_transform in range (1, i + 1):
+                if nw_cell_content == player_piece and (enemy_piece in check_list) and check_list[0] != player_piece:
+                    for index_transform in range (1, i):
                         if placement == "placement":
                             return True
                         else:
                             grille[row - index_transform][column - index_transform][3] = player_piece
+                    check_list[-1] = " "
         except:
             pass
         check_list.clear()
@@ -326,12 +331,13 @@ class Damier():
                 i+= 1
                 se_cell_content = grille[row + i][column + i][3]
                 check_list.append(se_cell_content)
-                if se_cell_content == player_piece and (enemy_piece in check_list) and ('.' not in check_list):
-                    for index_transform in range(1, i + 1):
+                if se_cell_content == player_piece and (enemy_piece in check_list) and check_list[0] != player_piece:
+                    for index_transform in range(1, i):
                         if placement == "placement":
                             return True
                         else:
                             grille[row + index_transform][column + index_transform][3] = player_piece
+                    check_list[-1] = " "
         except:
             pass
         check_list.clear()
@@ -343,12 +349,13 @@ class Damier():
                 i+= 1
                 sw_cell_content = grille[row + i][column - i][3]
                 check_list.append(sw_cell_content)
-                if sw_cell_content== player_piece and (enemy_piece in check_list) and ('.' not in check_list):
-                    for index_transform in range(1, i + 1):
+                if sw_cell_content== player_piece and (enemy_piece in check_list) and check_list[0] != player_piece:
+                    for index_transform in range(1, i):
                         if placement == "placement":
                             return True
                         else:
                             grille[row + index_transform][column - index_transform][3] = player_piece
+                    check_list[-1] = " "
         except:
             pass
         check_list.clear()
@@ -360,12 +367,13 @@ class Damier():
                 i+= 1
                 ne_cell_content = grille[row - i][column + i][3]
                 check_list.append(ne_cell_content)
-                if ne_cell_content == player_piece and (enemy_piece in check_list) and ('.' not in check_list):
-                    for index_transform in range(1, i + 1):
+                if ne_cell_content == player_piece and (enemy_piece in check_list) and check_list[0] != player_piece:
+                    for index_transform in range(1, i):
                         if placement == "placement":
                             return True
                         else:
                             grille[row - index_transform][column + index_transform][3] = player_piece
+                    check_list[-1] = " "
         except:
             pass
 
