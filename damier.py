@@ -406,9 +406,9 @@ class Damier():
                                 self.move_counter += 1
                                 self.lesCases[self.lesCases.index(ligne)][ligne.index(case)] = [(case[0][0], case[0][1]), (case[1][0], case[1][1]), True, self.current_color]
                                 case = [(case[0][0], case[0][1]), (case[1][0], case[1][1]), True, self.current_color]
-                                self.flip_horizontal(self.lesCases, self.current_color, self.lesCases.index(ligne), ligne.index(case), "nonplacement")
-                                self.flip_vertical(self.lesCases, self.current_color, self.lesCases.index(ligne), ligne.index(case), "nonplacement")
-                                self.flip_diagonal(self.lesCases, self.current_color, self.lesCases.index(ligne), ligne.index(case), "nonplacement")
+                                self.flip_horizontal(self.lesCases, self.current_color, self.lesCases.index(ligne), ligne.index(case), "retournement")
+                                self.flip_vertical(self.lesCases, self.current_color, self.lesCases.index(ligne), ligne.index(case), "retournement")
+                                self.flip_diagonal(self.lesCases, self.current_color, self.lesCases.index(ligne), ligne.index(case), "retournement")
                             
                             else: # Sinon on retourne des messages d'erreur
                                 showerror("Erreur", "Vous devez obligatoirement pouvoir retourner un pion.")
